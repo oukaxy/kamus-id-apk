@@ -1,0 +1,14 @@
+{
+  "appId": "com.kamu.id",
+  "appName": "Kamus ID",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#0a0a0c"
+  },
+  "plugins": {
+    "Filesystem": {
+      "iosScheme": "ionic"
+    }
+  }
+}
