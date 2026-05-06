@@ -1,0 +1,3173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="msapplication-navbutton-color" content="#0a0a0c">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Kamus ID">
+<title>Kamus ID</title>
+<!-- Capacitor runtime (otomatis tersedia saat jadi APK) -->
+<script src="capacitor.js"></script>
+<!-- Filesystem adapter: pengganti OPFS, backward-compatible dengan PWA -->
+<script src="capacitor-filesystem.js"></script>
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkthbXVzIElEIiwgInNob3J0X25hbWUiOiAiS2FtdXMgSUQiLCAiZGVzY3JpcHRpb24iOiAiS2FtdXMgQmFoYXNhIEluZG9uZXNpYS1JbmdncmlzIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGEwYTBjIiwgInRoZW1lX2NvbG9yIjogIiMwYTBhMGMiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQtcHJpbWFyeSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQUlBQUFEZHZ2dFFBQUFDdmtsRVFWUjRuTzNkMFczVVFCUkFVUzlLRmFHVlVGRW9oNDZvaFQ3NFdlVW5pZ2krUmpOdk9hY0N2OG5WZUQzV2JtN1ByeThIblBWbDlRVXdtNEJJQkVRaUlCSUJrUWlJUkVBa0FpSVJFSW1BU0FSRUlpQVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJESjArb0xTSDc5K0xuNkVpN3c5ZnUzMVpkdzNtM2l2enA0akc3ZW0xalN2RnZZbzlaenpCeHRXRUFUbC9pdmpCdHdVa0RqRnZlY1dXT09DV2pXc2thRGhwMFIwS0FGdmNxVWtRYzhoZldsZlA5ME0rWFBzLzl6Mll3ZGlHMEppR1QzZ0tiY2EvNlIvY2ZmUFNBMkp5QVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJESjdGK3F2OURhSDVQYi8zZUFQbUlISWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlKeEVuMDM5eXg0TFRzUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFNGwzWW5XOWxuR01ISWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlKeEVuMDM5eXg0TFRzUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFNGwzWW5XOWxuR01ISWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlKeEVuMDM5eXg0TFRzUXllNEJyWDFGdGR6KzQrOGVFSnNURU1udCtmVmw5VFg4MmYvNUNYZi8rOWN4WlFjYXNaVFhtakx5aklDT09RdDZpVUhEamdub0dMV3N4YXd4SndWMFRGdmNFOFlOT0N5Z1krQVNmOTdFMFdZOGhYM2tNWjdPSm5ielpuWkFMRGZ2RnNaV0JFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWgrQTZUaFM4TzRuL1I2QUFBQUFFbEZUa1N1UW1DQyIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn0sIHsic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBSUFBQUI3R2tPdEFBQUlwRWxFUVZSNG5PM2N3VzBqUnhCQVVjbGdGR0lxWWtSaU9NeUlzVEFQSDN6Wnl4cHJlY1JtMTM4dmdoSlFQWDlhRXViOTQrdnpEWUNldjFZUEFNQWFBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVhZlZBL0FTSHJmNzZoRjRxdlAxc25vRTFudi8rUHBjUFFNTGVPTHpLejFvRW9BY2ozNStSd1pxQktEQ2M1OC9wd1FSQWpDZlJ6L2ZJd1BqK1MrZzRUejkrVGJMTTU0YndGaE9MMGR4RlpqS0RXQW1UMzhPWkoybUVvQ0JIRmNPWjZsR0VvQnBIRlIraU5XYVJ3QkdjVVQ1VVJac0dBR1l3K0hrQ2F6WkpBSXdoR1BKMDFpMk1RUmdBZ2VTSjdOeU13akE5aHhGbHJCNEF3akEzaHhDRnJKK3V4TUFnQ2dCMkpqM0w1YXpoRnNUZ0YwNWVMd0lxN2d2QVFDSThqWFFMZTMxenZWZnZ5VzUxMC9IUDN3eGRFZHVBQUJSQWdBUUpRRDc4UnNTWHBDMTNKRUFBRVFKd0dhOFovR3lMT2QyQkFBZ1NnQUFvZ1FBSUVvQUFLSUVZQ2YreU1hTHM2SjdFUUNBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0tqVDZnSGdNT2ZyWmZVSXUzcmM3cXRIWUFFM0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUNvMCtvQjREQ1AyMzMxQ0xBVE53Q0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQXFOUHFBZUF3NSt0bDlRaTdldHp1cTBkZ0FUY0FnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0tqVDZnSGdNSS9iZmZVSXNCTTNBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQ28wK29CNEREbjYyWDFDTHQ2M082clIyQUJOd0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQXFOUHFBZUF3ajl0OTlRaXdFemNBZ0NnQkFJZ1NBSUFvQWRqSitYcFpQUUw4R3l1NkZ3RUFpQklBZ0NnQkFJZ1NBSUFvQWRpTVA3THhzaXpuZGdRQUlFb0E5dU05aXhka0xYY2tBQUJSQWdBUTlmN3g5Ymw2QnI3RGx5OTVIWDcvc3lrM0FJQW9BZGlWZHk1ZWhGWGNsd0Jzek1Gak9VdTROUUVBaUJLQXZYbi9ZaUhydHpzQjJKNUR5QklXYndBQm1NQlI1TW1zM0F3Q01JUUR5ZE5ZdGpFRVlBN0hraWV3WnBNSXdDZ09Kei9LZ2cwakFOTTRvdndRcXpXUEFBemtvSEk0U3pXU0FNemt1SElnNnpTVnI0RU81Nk9oL0I4ZS9iTzVBUXpuQVBOdGxtYzhONEFLVndIK25FZC9oQURrS0FHLzQ3bGZJd0JSTXNDdlBQcWJCSUMzTnozbzhjVG5UUUFBc3Z3WEVFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQTFOOHpkS0pEbkdsZFhRQUFBQUJKUlU1RXJrSmdnZz09IiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAAIpElEQVR4nO3cwW0jRxBAUclgFGIqYkRiOMyIsTAPH3zZyxprecRm138vghJQPX9aEub94+vzDYCev1YPAMAaAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUQIAECUAAFECABAlAABRAgAQJQAAUafVA/ASHrf76hF4qvP1snoE1nv/+PpcPQMLeOLzKz1oEoAcj35+RwZqBKDCc58/pwQRAjCfRz/fIwPj+S+g4Tz9+TbLM54bwFhOL0dxFZjKDWAmT38OZJ2mEoCBHFcOZ6lGEoBpHFR+iNWaRwBGcUT5URZsGAGYw+HkCazZJAIwhGPJ01i2MQRgAgeSJ7NyMwjA9hxFlrB4AwjA3hxCFrJ+uxMAgCgB2Jj3L5azhFsTgF05eLwIq7gvAQCI8jXQLe31zvVfvyW510/HP3wxdEduAABRAgAQJQD78RsSXpC13JEAAEQJwGa8Z/GyLOd2BAAgSgAAogQAIEoAAKIEYCf+yMaLs6J7EQCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgKjT6gHgMOfrZfUIu3rc7qtHYAE3AIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAICo0+oB4DCP2331CLATNwCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAqNPqAeAw5+tl9Qi7etzuq0dgATcAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgKjT6gHgMI/bffUIsBM3AIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAICo0+oB4DDn62X1CLt63O6rR2ABNwCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAKAEAiBIAgCgBAIgSAIAoAQCIEgCAqNPqAeAwj9t99QiwEzcAgCgBAIgSAIAoAdjJ+XpZPQL8Gyu6FwEAiBIAgCgBAIgSAIAoAdiMP7LxsizndgQAIEoA9uM9ixdkLXckAABRAgAQ9f7x9bl6Br7Dly95HX7/syk3AIAoAdiVdy5ehFXclwBszMFjOUu4NQEAiBKAvXn/YiHrtzsB2J5DyBIWbwABmMBR5Mms3AwCMIQDydNYtjEEYA7HkiewZpMIwCgOJz/Kgg0jANM4ovwQqzWPAAzkoHI4SzWSAMzkuHIg6zSVr4EO56Oh/B8e/bO5AQznAPNtlmc8N4AKVwH+nEd/hADkKAG/47lfIwBRMsCvPPqbBIC3Nz3o8cTnTQAAsvwXEECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBAlAAARAkAQJQAAEQJAECUAABECQBA1N8zdKJDnGldXQAAAABJRU5ErkJggg==">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+/* Font fallback offline — tetap cantik tanpa internet */
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 700;src:local('Georgia'),local('Times New Roman');font-display:swap}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:300 400 500;src:local('Courier New'),local('monospace');font-display:swap}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+:root{--bg:#0a0a0c;--surface:#111115;--card:#16161c;--border:#2a2a35;--gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:rgba(201,168,76,0.12);--text:#e8e4dc;--muted:#6b6872;--danger:#c0392b}
+html,body{height:100%;height:100dvh;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;touch-action:manipulation}
+input,textarea{-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default!important}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;transition:opacity .5s,transform .5s}
+.screen.hidden{opacity:0;pointer-events:none;transform:scale(1.03) translateY(-16px)}
+
+/* LOCK */
+#lockScreen{background:var(--bg);align-items:stretch;justify-content:flex-start;z-index:100}
+.lock-rings{display:none}
+.ring{display:none}
+@keyframes rpulse{0%,100%{opacity:.3}50%{opacity:1}}
+.lock-content{display:none}
+/* lock emblem styles removed */
+.pin-dots{display:flex;gap:18px}
+.pin-dot{width:12px;height:12px;border-radius:50%;border:2px solid #ccc;background:transparent;transition:all .15s;position:relative}
+.pin-dot.filled{background:#1a6b3c;border-color:#1a6b3c;box-shadow:0 0 10px rgba(26,107,60,.7);transform:scale(1.25);animation:dotpop .15s ease}
+.pin-dot.error{background:var(--danger)!important;border-color:var(--danger)!important;box-shadow:0 0 10px rgba(192,57,43,.7)!important;animation:doterr .5s ease!important}
+@keyframes dotpop{0%{transform:scale(1)}50%{transform:scale(1.5)}100%{transform:scale(1.25)}}
+@keyframes doterr{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes dshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,2.5vw,16px);width:min(76vw,300px)}
+.num-btn{aspect-ratio:1;border-radius:50%;border:1.5px solid #2e7d52;background:#1a3d2b;color:#e8e4dc;font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:500;cursor:pointer;transition:all .15s;user-select:none;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.num-btn:active{transform:scale(.88);background:#1a6b3c;border-color:#4caf7d}
+.num-btn.del{background:transparent;border-color:transparent;color:var(--muted)}.num-btn.del:active{color:var(--danger)}
+.num-btn.zero{grid-column:2}
+.lock-hint{font-size:.6rem;color:var(--muted);letter-spacing:.18em;text-align:center}
+
+/* APP */
+#appScreen{background:var(--bg);z-index:50}
+.app-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));background:var(--surface);flex-shrink:0}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-logo{width:28px;height:28px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.brand-logo svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.brand-name{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:.05em}
+.brand-sub{font-size:.55rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;display:block;line-height:1}
+.header-btns{display:flex;gap:8px}
+.icon-btn{width:36px;height:36px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.icon-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+.icon-btn:active{border-color:var(--gold);color:var(--gold);transform:scale(.93)}
+.icon-btn.upload-btn{color:var(--gold);border-color:var(--gold-dim);background:var(--gold-dim)}
+.stats-row{display:flex;background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0}
+.stat-item{flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-val{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);display:block}
+.stat-lbl{font-size:.5rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.breadcrumb{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;overflow-x:auto}
+.breadcrumb::-webkit-scrollbar{display:none}
+.bc-item{font-size:.62rem;letter-spacing:.1em;color:var(--muted);cursor:pointer;white-space:nowrap;text-transform:uppercase}
+.bc-item:last-child{color:var(--gold)}.bc-item:not(:last-child):active{color:var(--text)}
+.bc-sep{color:var(--border);font-size:.7rem}
+.filter-row{display:flex;gap:6px;padding:8px 14px;flex-shrink:0;overflow-x:auto;border-bottom:1px solid var(--border)}
+.filter-row::-webkit-scrollbar{display:none}
+.ftab{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;cursor:pointer;white-space:nowrap;text-transform:uppercase;transition:all .2s}
+.ftab.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.gallery-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+.gallery-scroll::-webkit-scrollbar{display:none}
+#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:2px}
+.section-label{grid-column:1/-1;padding:10px 6px 4px;font-size:.58rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+
+/* ALBUM CARD */
+.album-card{position:relative;aspect-ratio:1;overflow:hidden;background:var(--card);cursor:pointer}
+.alb-bg-slot{width:100%;height:100%;position:absolute;inset:0}
+.alb-bg{width:100%;height:100%;object-fit:cover;display:block;opacity:.65;filter:brightness(.75)}
+.alb-bg-empty{width:100%;height:100%;background:linear-gradient(135deg,var(--card),var(--surface));display:flex;align-items:center;justify-content:center}
+.alb-bg-empty svg{width:28px;height:28px;stroke:var(--border);fill:none;stroke-width:1}
+.alb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:10px 8px;gap:2px}
+.alb-name{font-size:.72rem;letter-spacing:.05em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alb-count{font-size:.55rem;color:var(--gold);letter-spacing:.12em}
+.alb-menu{position:absolute;top:6px;right:6px;width:26px;height:26px;background:rgba(0,0,0,.55);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px)}
+.alb-menu svg{width:12px;height:12px;stroke:white;fill:none;stroke-width:2}
+.album-new{aspect-ratio:1;background:var(--card);border:1.5px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .2s}
+.album-new:active{border-color:var(--gold)}
+.album-new svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.5}
+.album-new span{font-size:.58rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+
+/* PHOTO CARD */
+.photo-card{position:relative;aspect-ratio:1;overflow:hidden;background:var(--card);cursor:pointer}
+.photo-card img,.photo-card video{width:100%;height:100%;object-fit:cover;display:block}
+/* Shimmer placeholder saat lazy load belum muncul */
+.photo-card.lazy-pending::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--card) 25%,var(--surface) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+.alb-bg-slot.lazy-pending{background:linear-gradient(90deg,var(--card) 25%,var(--surface) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.media-badge{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.65);border-radius:4px;padding:2px 5px;font-size:.5rem;color:white;backdrop-filter:blur(4px)}
+.gif-badge.playing{background:rgba(100,50,200,.95);box-shadow:0 0 8px rgba(100,50,200,.6)}
+.fav-star{position:absolute;bottom:5px;right:5px}
+.fav-star svg{width:14px;height:14px;fill:var(--gold);stroke:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.8))}
+.empty-state{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;gap:14px;text-align:center;color:var(--muted)}
+.empty-state svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1}
+.empty-state p{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;line-height:1.8}
+
+/* FAB */
+.fab{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));right:20px;width:56px;height:56px;border-radius:50%;background:var(--gold);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:60;box-shadow:0 4px 20px rgba(201,168,76,.4);transition:transform .2s}
+.fab svg{width:22px;height:22px;stroke:#0a0a0c;fill:none;stroke-width:2}
+.fab:active{transform:scale(.9)}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;background:#000;z-index:200;display:flex;flex-direction:column;transition:opacity .25s}
+#lightbox.hidden{opacity:0;pointer-events:none}
+.lb-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));flex-shrink:0;background:linear-gradient(to bottom,rgba(0,0,0,.85),transparent);position:absolute;top:0;left:0;right:0;z-index:10;transition:opacity .3s,transform .3s}
+.lb-topbar.ui-hidden{opacity:0;transform:translateY(-100%);pointer-events:none}
+.lb-counter{font-size:.65rem;letter-spacing:.15em;color:rgba(255,255,255,.8)}
+.lb-actions{display:flex;gap:8px}
+.lb-media-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;background:#000}
+#lbImg{width:100%;height:100%;object-fit:contain;transform-origin:center;user-select:none;display:block}
+#lbVid{position:absolute;inset:0;width:100%;height:100%;display:none;object-fit:contain;background:#000}
+#lbGif{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:4px;transition:all .3s;z-index:5}
+.lb-arrow svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+.lb-arrow:active{border-color:var(--gold);color:var(--gold)}
+.lb-arrow.prev{left:8px}.lb-arrow.next{right:8px}
+.lb-arrow.ui-hidden{opacity:0;pointer-events:none}
+.lb-infobar{flex-shrink:0;padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(255,255,255,.1);background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,.7));position:absolute;bottom:0;left:0;right:0;z-index:10;transition:opacity .3s,transform .3s}
+.lb-infobar.ui-hidden{opacity:0;transform:translateY(100%);pointer-events:none}
+.lb-infobar-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lb-name{font-family:'Playfair Display',serif;font-size:.9rem}.lb-date{font-size:.6rem;color:var(--gold);letter-spacing:.15em;margin-top:3px}
+.lb-fav-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:8px 14px;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:4px;display:flex;align-items:center;gap:5px;transition:all .2s}
+.lb-fav-btn svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5}
+.lb-fav-btn.active{border-color:var(--gold);color:var(--gold)}.lb-fav-btn.active svg{fill:var(--gold)}
+.zoom-hint{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:4px 12px;border-radius:12px;font-size:.55rem;letter-spacing:.1em;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap;z-index:6}
+.zoom-hint.show{opacity:1}
+
+/* SHEETS & MODALS */
+.bsheet{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;justify-content:flex-end;transition:opacity .3s}
+.bsheet.hidden{opacity:0;pointer-events:none}
+.bsheet-bd{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}
+.bsheet-body{position:relative;background:var(--surface);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;transition:transform .3s;max-height:85dvh;overflow-y:auto}
+.bsheet.hidden .bsheet-body{transform:translateY(100%)}
+.bsheet-body::-webkit-scrollbar{display:none}
+.sh{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 4px}
+.st{font-family:'Playfair Display',serif;font-size:1.05rem;text-align:center}
+.ss{font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-align:center}
+.album-sel{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.album-sel:active{border-color:var(--gold)}
+.album-sel span{font-size:.7rem}
+.album-sel svg{width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:1.5}
+.dz{border:1.5px dashed var(--border);border-radius:12px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;transition:border-color .2s,background .2s}
+.dz.over{border-color:var(--gold);background:var(--gold-dim)}
+.dz svg{width:30px;height:30px;stroke:var(--muted);fill:none;stroke-width:1}
+.dz p{font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-align:center}
+.pl{display:flex;flex-direction:column;gap:6px;max-height:40dvh;overflow-y:auto}
+.pl::-webkit-scrollbar{display:none}
+.pi{padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:space-between;transition:border-color .2s}
+.pi:active,.pi.sel{border-color:var(--gold);color:var(--gold)}
+.pi-c{font-size:.58rem;color:var(--muted)}
+.act-list{display:flex;flex-direction:column;gap:8px}
+.act-item{padding:14px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:10px;transition:all .2s}
+.act-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+.act-item:active{border-color:var(--gold);color:var(--gold)}
+.act-item.danger:active{border-color:var(--danger);color:var(--danger)}
+.modal-wrap{position:fixed;inset:0;z-index:260;display:flex;align-items:center;justify-content:center;padding:20px;transition:opacity .3s}
+.modal-wrap.hidden{opacity:0;pointer-events:none}
+.modal-bd{position:absolute;inset:0;background:rgba(0,0,0,.8)}
+.modal-box{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px}
+.modal-t{font-family:'Playfair Display',serif;font-size:1.05rem}
+.modal-msg{font-size:.7rem;color:var(--muted);letter-spacing:.08em;line-height:1.6}
+.mi{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:'DM Mono',monospace;font-size:.8rem;width:100%;outline:none;transition:border-color .2s}
+.mi:focus{border-color:var(--gold)}
+.btn-g{width:100%;padding:13px;background:var(--gold);border:none;border-radius:8px;color:#0a0a0c;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.btn-g:active{background:var(--gold-light);transform:scale(.98)}
+.btn-gh{width:100%;padding:11px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.btn-gh:active{border-color:var(--danger);color:var(--danger)}
+.btn-d{width:100%;padding:11px;background:transparent;border:1px solid var(--danger);border-radius:8px;color:var(--danger);font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.btn-d:active{background:var(--danger);color:white}
+/* Block browser long-press context menu on media */
+.photo-card img,.photo-card video,#lbImg,#lbVid,#lbGif{
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  user-select:none;
+  pointer-events:none;
+}
+.photo-card{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+
+.photo-card.selected::after{content:'';position:absolute;inset:0;background:rgba(201,168,76,.35);pointer-events:none}
+.photo-card.selected .sel-check{display:flex!important}
+.sel-check{display:none;position:absolute;top:6px;left:6px;width:22px;height:22px;border-radius:50%;background:var(--gold);align-items:center;justify-content:center;z-index:2}
+.sel-check svg{width:12px;height:12px;stroke:#000;fill:none;stroke-width:2.5}
+.multibar{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--gold);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;z-index:65;transform:translateY(100%);transition:transform .3s}
+.multibar.show{transform:translateY(0)}
+.multibar-info{font-size:.7rem;color:var(--gold);letter-spacing:.1em}
+.multibar-btns{display:flex;gap:8px}
+/* SORT BTN */
+.sort-btn{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:5px}
+.sort-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5}
+.sort-btn:active{border-color:var(--gold);color:var(--gold)}
+/* LB INFO */
+.lb-info-row{display:flex;gap:12px;margin-top:4px}
+.lb-info-tag{font-size:.56rem;color:var(--muted);letter-spacing:.08em;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2px 7px}
+
+#toast{position:fixed;top:calc(80px + env(safe-area-inset-top));left:50%;transform:translateX(-50%) translateY(-10px);background:var(--card);border:1px solid var(--gold);color:var(--text);padding:10px 20px;border-radius:20px;font-size:.68rem;letter-spacing:.1em;white-space:nowrap;z-index:9998;opacity:0;transition:all .3s;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#lbRotateBtn{color:var(--gold);border-color:var(--gold-dim);background:var(--gold-dim)}
+#lbRotateBtn:active{transform:scale(.93) rotate(90deg);transition:transform .3s}
+
+/* Migration banner */
+#migBanner{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:10px;z-index:70;opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+#migBanner.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.mig-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:migpulse 1.2s ease-in-out infinite}
+@keyframes migpulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+.mig-text{font-size:.62rem;color:var(--muted);letter-spacing:.08em}
+.mig-count{font-size:.62rem;color:var(--gold);letter-spacing:.06em;font-family:'Playfair Display',serif}
+
+.al{animation:aal .2s ease}.ar{animation:aar .2s ease}
+@keyframes aal{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes aar{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+#lockTyping{transition:color .1s;padding-right:2px}
+
+/* ═══ TIME-LOCK ═══ */
+#timeLockOverlay{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;background:var(--bg)}
+#timeLockOverlay.hidden{display:none}
+
+/* Header hijau identik dengan lockscreen */
+.tl-appbar{background:#1a6b3c;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top));display:flex;align-items:center;gap:12px;flex-shrink:0}
+
+/* Search bar palsu (sama dengan lockscreen, tapi disabled) */
+.tl-searchbar{background:#155c33;padding:8px 14px;flex-shrink:0}
+.tl-searchbar-inner{background:white;border-radius:24px;display:flex;align-items:center;padding:8px 14px;gap:10px;opacity:.6}
+
+/* Body tengah: konten time-lock */
+.tl-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;gap:14px;overflow:hidden}
+
+/* Card kamus palsu di atas */
+.tl-kamus-card{width:100%;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;flex-shrink:0}
+.tl-kamus-word{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--text);display:flex;align-items:baseline;gap:10px;margin-bottom:3px}
+.tl-kamus-phonetic{font-size:.6rem;color:#1a6b3c;letter-spacing:.05em}
+.tl-kamus-pos{font-size:.6rem;color:var(--muted);margin-bottom:4px}
+.tl-kamus-def{font-size:.72rem;color:var(--text);line-height:1.55}
+
+/* Countdown grid — 2x2 supaya muat */
+.tl-countdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:320px}
+.tl-unit{display:flex;flex-direction:column;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 6px}
+.tl-num{font-family:'Playfair Display',serif;font-size:2rem;color:#1a6b3c;line-height:1;text-align:center}
+.tl-lbl{font-size:.48rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase}
+
+/* Info unlock */
+.tl-unlock-info{width:100%;background:var(--card);border:1px solid #1a3d2b;border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:3px}
+.tl-unlock-label{font-size:.52rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
+.tl-unlock-date{font-size:.72rem;color:#4caf7d;letter-spacing:.04em;font-weight:500}
+.tl-progress-wrap{width:100%;background:var(--border);border-radius:4px;height:3px;overflow:hidden}
+.tl-progress-bar{height:100%;background:#1a6b3c;border-radius:4px;transition:width 1s linear;width:0%}
+
+/* Bottom hint */
+.tl-hint{font-size:.52rem;color:var(--muted);letter-spacing:.12em;text-align:center;line-height:1.8;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+
+
+/* ── Custom Picker ── */
+.cp-wrap{display:flex;flex-direction:column;gap:10px}
+.cp-section-label{font-size:.52rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:2px}
+/* Scroll drum */
+.cp-row{display:flex;gap:6px;align-items:center}
+.cp-drum-wrap{flex:1;position:relative;height:108px;overflow:hidden;border-radius:8px;background:var(--card);border:1px solid var(--border);cursor:ns-resize;user-select:none;-webkit-user-select:none}
+.cp-drum-wrap.wide{flex:1.6}
+.cp-drum{display:flex;flex-direction:column;transition:transform .15s cubic-bezier(.25,.1,.25,1)}
+.cp-item{height:36px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--muted);transition:color .15s,font-size .15s;flex-shrink:0}
+.cp-item.active{color:var(--gold);font-size:1.3rem}
+/* Selection highlight bar */
+.cp-drum-wrap::before,.cp-drum-wrap::after{content:'';position:absolute;left:0;right:0;height:36px;pointer-events:none;z-index:2}
+.cp-drum-wrap::before{top:0;background:linear-gradient(to bottom,var(--card),transparent)}
+.cp-drum-wrap::after{bottom:0;background:linear-gradient(to top,var(--card),transparent)}
+.cp-sel-bar{position:absolute;top:50%;left:6px;right:6px;height:36px;transform:translateY(-50%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);pointer-events:none;z-index:1;border-radius:4px}
+.cp-sep{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--border);flex-shrink:0;padding:0 1px}
+/* Preview */
+.cp-preview{background:rgba(201,168,76,.07);border:1px solid var(--gold-dim);border-radius:8px;padding:10px 14px;font-size:.72rem;color:var(--gold);letter-spacing:.06em;text-align:center;display:none}
+.cp-preview.show{display:block}
+/* Preset buttons — on-theme */
+.tl-preset{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.06em;cursor:pointer;transition:all .2s;flex:1;text-align:center}
+.tl-preset:active,.tl-preset.active{border-color:#1a6b3c;color:#4caf7d;background:rgba(26,107,60,.15)}
+.tl-presets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+
+</style>
+</head>
+<body>
+
+<!-- LOCK (disguised as Kamus ID) -->
+<div class="screen" id="lockScreen">
+  <div style="display:flex;flex-direction:column;height:100%;width:100%;background:var(--bg)">
+
+    <!-- App bar -->
+    <div style="background:#1a6b3c;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top));display:flex;align-items:center;gap:12px;flex-shrink:0">
+      <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:white;fill:none;stroke-width:1.5;flex-shrink:0"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span style="color:white;font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:.04em">Kamus ID</span>
+      <span style="color:rgba(255,255,255,.6);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;margin-left:auto">Indonesia · Inggris</span>
+    </div>
+
+    <!-- Search bar (PIN input) -->
+    <div style="background:#155c33;padding:8px 14px;flex-shrink:0">
+      <div style="background:white;border-radius:24px;display:flex;align-items:center;padding:8px 14px;gap:10px">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#888;fill:none;stroke-width:2;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <div style="flex:1;display:flex;gap:8px;align-items:center;min-height:20px">
+          <div id="pinDots" style="display:flex;gap:8px;align-items:center">
+            <div class="pin-dot" id="d0"></div><div class="pin-dot" id="d1"></div>
+            <div class="pin-dot" id="d2"></div><div class="pin-dot" id="d3"></div>
+          </div>
+          <span style="color:#bbb;font-size:.8rem;font-family:'DM Mono',monospace" id="lockPlaceholder">Cari kata...</span>
+        </div>
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#888;fill:none;stroke-width:2;flex-shrink:0"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </div>
+    </div>
+
+    <!-- Kata hari ini + pencarian terakhir -->
+    <div style="flex:1;padding:12px 14px 8px;display:flex;flex-direction:column;gap:10px;overflow:hidden">
+      <!-- Kata hari ini -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:5px">
+          <span style="font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--text)">privasi</span>
+          <span style="font-size:.62rem;color:#1a6b3c;letter-spacing:.05em">• pri·va·si •</span>
+        </div>
+        <div style="font-size:.62rem;color:var(--muted);margin-bottom:5px">noun</div>
+        <div style="font-size:.75rem;color:var(--text);line-height:1.6">Kebebasan pribadi; keadaan terbebas dari pengawasan orang lain.</div>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:8px;font-style:italic;line-height:1.5">"Menjaga <span style="color:#1a6b3c">privasi</span> adalah hak setiap individu."</div>
+      </div>
+      <!-- Pencarian terakhir -->
+      <div style="flex-shrink:0">
+        <div style="font-size:.56rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pencarian Terakhir</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:5px 13px;font-size:.68rem;color:var(--muted)">rahasia</span>
+          <span style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:5px 13px;font-size:.68rem;color:var(--muted)">kenangan</span>
+          <span style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:5px 13px;font-size:.68rem;color:var(--muted)">tersembunyi</span>
+          <span style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:5px 13px;font-size:.68rem;color:var(--muted)">aman</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Numpad fixed at bottom -->
+    <div style="flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:8px 20px;padding-bottom:calc(10px + env(safe-area-inset-bottom))">
+      <div style="font-size:.52rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:8px">Ketuk angka untuk mencari</div>
+      <div class="numpad" style="margin:0 auto">
+        <button class="num-btn" onclick="pn('1')">1</button><button class="num-btn" onclick="pn('2')">2</button><button class="num-btn" onclick="pn('3')">3</button>
+        <button class="num-btn" onclick="pn('4')">4</button><button class="num-btn" onclick="pn('5')">5</button><button class="num-btn" onclick="pn('6')">6</button>
+        <button class="num-btn" onclick="pn('7')">7</button><button class="num-btn" onclick="pn('8')">8</button><button class="num-btn" onclick="pn('9')">9</button>
+        <button class="num-btn zero" onclick="pn('0')">0</button><button class="num-btn del" onclick="pd()">⌫</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- APP -->
+<div class="screen hidden" id="appScreen">
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <div><span class="brand-name">Kamus ID</span><span class="brand-sub">Private Gallery</span></div>
+    </div>
+    <div class="header-btns">
+      <button class="icon-btn upload-btn" onclick="openUpload()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+      <button class="icon-btn" onclick="openSettings()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+      <button class="icon-btn" onclick="lockApp()"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
+    </div>
+  </header>
+  <div class="stats-row">
+    <div class="stat-item"><span class="stat-val" id="sT">0</span><span class="stat-lbl">Media</span></div>
+    <div class="stat-item"><span class="stat-val" id="sA">0</span><span class="stat-lbl">Album</span></div>
+    <div class="stat-item"><span class="stat-val" id="sF">0</span><span class="stat-lbl">Favorit</span></div>
+    <div class="stat-item"><span class="stat-val" id="sS">0 MB</span><span class="stat-lbl">Ukuran</span></div>
+  </div>
+  <div class="breadcrumb" id="bc"><span class="bc-item"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Vault</span></div>
+  <div class="filter-row">
+    <button class="ftab active" onclick="setFilter('all',this)">Semua</button>
+    <button class="ftab" onclick="setFilter('fav',this)"><svg viewBox="0 0 24 24" style="width:11px;height:11px;fill:currentColor;stroke:none;display:inline-block;vertical-align:middle;margin-right:3px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Favorit</button>
+    <button class="ftab" onclick="setFilter('photo',this)">Foto</button>
+    <button class="ftab" onclick="setFilter('video',this)">Video</button>
+    <button class="ftab" onclick="setFilter('gif',this)">GIF</button>
+    <button class="sort-btn" id="sortBtn" onclick="cycleSort()"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Terbaru</button>
+  </div>
+  <div class="gallery-scroll"><div id="gallery"></div></div>
+  <button class="fab" onclick="openUpload()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="hidden">
+  <div class="lb-topbar" id="lbTopbar">
+    <span class="lb-counter" id="lbC">1/1</span>
+    <div class="lb-actions">
+      <button class="icon-btn" id="lbRotateBtn" onclick="masukLandscape()" style="display:none" title="Putar Landscape"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5"><path d="M21 8a2 2 0 0 0-2-2H7l-4 4 4 4h12a2 2 0 0 0 2-2v-4z"/><path d="M3 12V6"/></svg></button>
+      <button class="icon-btn" onclick="openMoveLb()"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></button>
+      <button class="icon-btn" onclick="deleteLb()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+      <button class="icon-btn" onclick="closeLb()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+  </div>
+  <div class="lb-media-wrap" id="lbW">
+    <button class="lb-arrow prev" id="lbPrev" onclick="lbNav(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <img id="lbImg" src="" alt="">
+    <video id="lbVid" playsinline></video>
+    <img id="lbGif" src="" alt="">
+    <!-- Custom video controls -->
+    <div id="vidControls" style="display:none;position:absolute;bottom:80px;left:50%;transform:translateX(-50%);z-index:8;flex-direction:column;align-items:center;gap:10px;width:85%;max-width:360px">
+      <div id="vidProgressWrap" style="width:100%;height:28px;display:flex;align-items:center;cursor:pointer">
+        <div style="width:100%;height:3px;background:rgba(255,255,255,.25);border-radius:2px;position:relative">
+          <div id="vidProgress" style="height:100%;background:var(--gold);border-radius:2px;width:0%"></div>
+          <div id="vidThumb" style="position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--gold);transform:translateY(-50%);left:0%"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <button onclick="skipVideo(-10);event.stopPropagation()" style="background:none;border:none;color:white;cursor:pointer;opacity:.85;display:flex;flex-direction:column;align-items:center;gap:2px">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:white;fill:none;stroke-width:1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/><text x="12" y="14" text-anchor="middle" font-size="5.5" fill="white" stroke="none" font-family="monospace" font-weight="bold">10</text></svg>
+          <span style="font-size:.45rem;color:rgba(255,255,255,.6)">-10s</span>
+        </button>
+        <button id="vidPlayBtn" onclick="toggleVideoPlay();event.stopPropagation()" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.5);border-radius:50%;width:54px;height:54px;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+          <svg id="vidPlayIcon" viewBox="0 0 24 24" style="width:22px;height:22px;fill:white;stroke:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+        <button onclick="skipVideo(10);event.stopPropagation()" style="background:none;border:none;color:white;cursor:pointer;opacity:.85;display:flex;flex-direction:column;align-items:center;gap:2px">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:white;fill:none;stroke-width:1.8"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-4.5"/><text x="12" y="14" text-anchor="middle" font-size="5.5" fill="white" stroke="none" font-family="monospace" font-weight="bold">10</text></svg>
+          <span style="font-size:.45rem;color:rgba(255,255,255,.6)">+10s</span>
+        </button>
+      </div>
+      <div style="display:flex;justify-content:space-between;width:100%">
+        <span id="vidCurTime" style="font-size:.58rem;color:rgba(255,255,255,.7);font-family:'DM Mono',monospace">0:00</span>
+        <span id="vidDuration" style="font-size:.58rem;color:rgba(255,255,255,.7);font-family:'DM Mono',monospace">0:00</span>
+      </div>
+    </div>
+    <button class="lb-arrow next" id="lbNext" onclick="lbNav(1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+    <div class="zoom-hint" id="zh">Pinch / double-tap to zoom</div>
+  </div>
+  <div class="lb-infobar" id="lbInfobar">
+    <div class="lb-infobar-top">
+      <div><div class="lb-name" id="lbN">—</div><div class="lb-date" id="lbD">—</div></div>
+      <button class="lb-fav-btn" id="lbFav" onclick="toggleFav()">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Favorit
+      </button>
+    </div>
+    <div class="lb-info-row"><span class="lb-info-tag" id="lbSize">—</span><span class="lb-info-tag" id="lbDim">—</span><span class="lb-info-tag" id="lbAlbTag">—</span></div>
+  </div>
+</div>
+
+<!-- UPLOAD SHEET -->
+<div class="bsheet hidden" id="uploadSheet">
+  <div class="bsheet-bd" onclick="closeUpload()"></div>
+  <div class="bsheet-body">
+    <div class="sh"></div><div class="st">Tambah ke Vault</div>
+    <p class="ss">FOTO · VIDEO · GIF · TERSEMBUNYI DARI GALERI</p>
+    <div class="album-sel" onclick="openPicker()"><span id="upAlbLbl"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Tanpa Album</span><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="dz" id="dz"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Seret & lepas file di sini</p></div>
+    <button class="btn-g" onclick="document.getElementById('fi').click()">Pilih File</button>
+    <button class="btn-gh" onclick="closeUpload()">Batal</button>
+  </div>
+</div>
+
+<!-- ALBUM PICKER -->
+<div class="bsheet hidden" id="pickerSheet">
+  <div class="bsheet-bd" onclick="closePicker()"></div>
+  <div class="bsheet-body">
+    <div class="sh"></div><div class="st">Simpan ke Album</div>
+    <div class="pl" id="pl"></div>
+    <button class="btn-g" onclick="openNewAlbum()">+ Buat Album Baru</button>
+    <button class="btn-gh" onclick="closePicker()">Batal</button>
+  </div>
+</div>
+
+<!-- ALBUM ACTION -->
+<div class="bsheet hidden" id="aas">
+  <div class="bsheet-bd" onclick="closeAas()"></div>
+  <div class="bsheet-body">
+    <div class="sh"></div><div class="st" id="aasT">Album</div>
+    <div class="act-list">
+      <div class="act-item" onclick="doRename()"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Ganti Nama Album</div>
+      <div class="act-item danger" onclick="doDelete()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Hapus Album</div>
+    </div>
+    <button class="btn-gh" onclick="closeAas()">Batal</button>
+  </div>
+</div>
+
+<!-- NEW ALBUM -->
+<div class="modal-wrap hidden" id="newAlbumMod">
+  <div class="modal-bd" onclick="closeNewAlbum()"></div>
+  <div class="modal-box">
+    <div class="modal-t">Album Baru</div>
+    <input class="mi" id="naI" type="text" placeholder="Nama album..." maxlength="40">
+    <button class="btn-g" onclick="createAlbum()">Buat Album</button>
+    <button class="btn-gh" onclick="closeNewAlbum()">Batal</button>
+  </div>
+</div>
+
+<!-- RENAME -->
+<div class="modal-wrap hidden" id="renameMod">
+  <div class="modal-bd" onclick="closeRename()"></div>
+  <div class="modal-box">
+    <div class="modal-t">Ganti Nama Album</div>
+    <input class="mi" id="rnI" type="text" placeholder="Nama baru..." maxlength="40">
+    <button class="btn-g" onclick="confirmRename()">Simpan</button>
+    <button class="btn-gh" onclick="closeRename()">Batal</button>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="modal-wrap hidden" id="delMod">
+  <div class="modal-bd" onclick="closeDelMod()"></div>
+  <div class="modal-box">
+    <div class="modal-t">Hapus Album</div>
+    <p class="modal-msg" id="delMsg"></p>
+    <button class="btn-d" onclick="confirmDel()">Ya, Hapus Album</button>
+    <button class="btn-gh" onclick="closeDelMod()">Batal</button>
+  </div>
+
+</div>
+
+<!-- CONFIRM DELETE SHEET -->
+<div class="bsheet hidden" id="confirmDelSheet">
+  <div class="bsheet-bd" onclick="closeConfirmDel()"></div>
+  <div class="bsheet-body">
+    <div class="sh"></div>
+    <div class="st">Hapus File?</div>
+    <p style="font-size:.7rem;color:var(--muted);text-align:center;letter-spacing:.05em;line-height:1.7" id="confirmDelMsg">File ini akan dihapus permanen.</p>
+    <button class="btn-d" onclick="doConfirmDel()">Ya, Hapus</button>
+    <button class="btn-gh" onclick="closeConfirmDel()">Batal</button>
+  </div>
+</div>
+
+<!-- MOVE ALBUM SHEET -->
+<div class="bsheet hidden" id="moveAlbumSheet">
+  <div class="bsheet-bd" onclick="closeMoveAlbum()"></div>
+  <div class="bsheet-body">
+    <div class="sh"></div>
+    <div class="st">Pindah ke Album</div>
+    <div class="pl" id="moveAlbumList"></div>
+    <button class="btn-gh" onclick="closeMoveAlbum()">Batal</button>
+  </div>
+</div>
+
+
+<!-- MULTISELECT BAR -->
+<div class="multibar" id="multibar">
+  <span class="multibar-info" id="multibarInfo">0 dipilih</span>
+  <div class="multibar-btns">
+    <button class="btn-gh" style="padding:8px 14px;font-size:.62rem;border-color:var(--muted);color:var(--muted)" onclick="selectAll()">
+      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;display:inline-block;vertical-align:middle;margin-right:4px"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 11 12 14 22 4"/></svg>Semua
+    </button>
+    <button class="btn-gh" style="padding:8px 14px;font-size:.62rem" onclick="cancelMulti()">Batal</button>
+    <button class="btn-gh" style="padding:8px 14px;font-size:.62rem;border-color:var(--gold);color:var(--gold)" onclick="bulkMove()">
+      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;display:inline-block;vertical-align:middle;margin-right:4px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Pindah
+    </button>
+    <button class="btn-d" style="padding:8px 14px;font-size:.62rem" onclick="deleteMulti()">
+      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;display:inline-block;vertical-align:middle;margin-right:4px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Hapus
+    </button>
+  </div>
+</div>
+
+
+<!-- SETTINGS SHEET -->
+<div class="bsheet hidden" id="settingsSheet">
+  <div class="bsheet-bd" onclick="closeSettings()"></div>
+  <div class="bsheet-body">
+    <div class="sh"></div>
+    <div class="st">Pengaturan</div>
+    <div class="act-list">
+      <div class="act-item" onclick="openTLModal();closeSettings()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Time-Lock Vault
+        <span id="tlSettingsBadge" style="margin-left:auto;font-size:.55rem;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);padding:2px 8px;border-radius:10px;display:none">Aktif</span>
+      </div>
+      <div class="act-item" onclick="openChangePIN()">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Ganti PIN
+      </div>
+      <div class="act-item" onclick="doBackup()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Backup Data
+      </div>
+      <div class="act-item" onclick="document.getElementById('restoreInput').click()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Pulihkan dari Backup
+      </div>
+      <div class="act-item danger" onclick="openResetModal();closeSettings()">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        Reset Semua Data
+      </div>
+    </div>
+    <div id="storageModeBadge" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:.62rem;color:var(--muted);letter-spacing:.08em"></div>
+    <button class="btn-gh" onclick="closeSettings()">Tutup</button>
+  </div>
+</div>
+<input type="file" id="restoreInput" accept=".vault" style="display:none" onchange="doRestore(this.files[0])">
+
+<!-- RESET DATA MODAL -->
+<div class="modal-wrap hidden" id="resetModal">
+  <div class="modal-bd" onclick="closeResetModal()"></div>
+  <div class="modal-box">
+    <div class="modal-t">Reset Semua Data</div>
+    <p class="modal-msg">Semua foto, video, album, dan pengaturan akan dihapus permanen. Tindakan ini <strong style="color:var(--danger)">tidak bisa dibatalkan</strong>.<br><br>Pastikan kamu sudah backup sebelum melanjutkan.</p>
+    <button class="btn-d" onclick="doReset()">Ya, Hapus Semua Data</button>
+    <button class="btn-gh" onclick="closeResetModal()">Batal</button>
+  </div>
+</div>
+
+<!-- BACKUP PROGRESS MODAL -->
+<div class="modal-wrap hidden" id="backupModal">
+  <div class="modal-bd"></div>
+  <div class="modal-box" style="align-items:center;text-align:center;gap:16px">
+    <div class="modal-t" id="backupTitle">Menyiapkan Backup...</div>
+    <div style="width:100%;background:var(--border);border-radius:4px;height:6px;overflow:hidden">
+      <div id="backupBar" style="height:100%;background:var(--gold);width:0%;transition:width .3s;border-radius:4px"></div>
+    </div>
+    <p class="modal-msg" id="backupMsg">Memproses file...</p>
+  </div>
+</div>
+
+<!-- CHANGE PIN MODAL -->
+<div class="modal-wrap hidden" id="changePINModal">
+  <div class="modal-bd" onclick="closeChangePIN()"></div>
+  <div class="modal-box">
+    <div class="modal-t">Ganti PIN</div>
+    <div>
+      <div style="font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">PIN Lama</div>
+      <input class="mi" id="oldPINInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+    </div>
+    <div>
+      <div style="font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">PIN Baru</div>
+      <input class="mi" id="newPINInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+    </div>
+    <div>
+      <div style="font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Konfirmasi PIN Baru</div>
+      <input class="mi" id="confirmPINInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+    </div>
+    <button class="btn-g" onclick="doChangePIN()">Simpan PIN Baru</button>
+    <button class="btn-gh" onclick="closeChangePIN()">Batal</button>
+  </div>
+</div>
+
+<!-- TIME-LOCK OVERLAY (tampil di atas lock screen saat vault masih terkunci waktu) -->
+<!-- TIME-LOCK OVERLAY — styled like Kamus ID lockscreen -->
+<div id="timeLockOverlay" class="hidden">
+
+  <!-- App bar identik dengan lockscreen -->
+  <div class="tl-appbar">
+    <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:white;fill:none;stroke-width:1.5;flex-shrink:0"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <span style="color:white;font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:.04em">Kamus ID</span>
+    <span style="color:rgba(255,255,255,.6);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;margin-left:auto">Indonesia · Inggris</span>
+  </div>
+
+  <!-- Search bar palsu (disabled) -->
+  <div class="tl-searchbar">
+    <div class="tl-searchbar-inner">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#888;fill:none;stroke-width:2;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span style="flex:1;color:#aaa;font-size:.78rem;font-family:'DM Mono',monospace">Pencarian tidak tersedia...</span>
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#888;fill:none;stroke-width:2;flex-shrink:0"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="tl-body">
+
+    <!-- Kata "terkunci" di card kamus -->
+    <div class="tl-kamus-card">
+      <div class="tl-kamus-word">
+        terkunci
+        <span class="tl-kamus-phonetic">• ter·kun·ci •</span>
+      </div>
+      <div class="tl-kamus-pos">adjective</div>
+      <div class="tl-kamus-def">Dalam keadaan dikunci; tidak dapat dibuka sampai waktu yang ditentukan tiba.</div>
+      <div style="font-size:.65rem;color:var(--muted);margin-top:7px;font-style:italic;line-height:1.5">"Pintu itu masih <span style="color:#1a6b3c">terkunci</span> — bersabar menunggu waktunya."</div>
+    </div>
+
+    <!-- Label section -->
+    <div style="width:100%;display:flex;align-items:center;gap:8px">
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+      <span style="font-size:.5rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase">Hitung Mundur</span>
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+    </div>
+
+    <!-- Countdown 2x2 grid -->
+    <div class="tl-countdown-grid">
+      <div class="tl-unit">
+        <div class="tl-num" id="tlD">00</div>
+        <div class="tl-lbl">Hari</div>
+      </div>
+      <div class="tl-unit">
+        <div class="tl-num" id="tlH">00</div>
+        <div class="tl-lbl">Jam</div>
+      </div>
+      <div class="tl-unit">
+        <div class="tl-num" id="tlM">00</div>
+        <div class="tl-lbl">Menit</div>
+      </div>
+      <div class="tl-unit">
+        <div class="tl-num" id="tlS">00</div>
+        <div class="tl-lbl">Detik</div>
+      </div>
+    </div>
+
+    <!-- Unlock date info -->
+    <div class="tl-unlock-info">
+      <span class="tl-unlock-label">Vault bisa dibuka pada</span>
+      <span class="tl-unlock-date" id="tlUnlockDate">—</span>
+      <div class="tl-progress-wrap" style="margin-top:6px">
+        <div class="tl-progress-bar" id="tlProgress"></div>
+      </div>
+    </div>
+
+    <div class="tl-hint">Kamus ID — menjaga privasi Anda<br>Numpad dinonaktifkan sementara</div>
+  </div>
+</div>
+
+<!-- TIME-LOCK MODAL — custom picker -->
+<div class="modal-wrap hidden" id="timeLockModal">
+  <div class="modal-bd" onclick="closeTLModal()"></div>
+  <div class="modal-box">
+    <div class="modal-t">⏳ Time-Lock Vault</div>
+
+    <!-- Status kunci aktif -->
+    <div class="tl-current-lock" id="tlCurrentStatus" style="display:none">
+      <div class="tl-current-lock-info" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%">
+        <div>
+          <span style="font-size:.52rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;display:block">Terkunci sampai</span>
+          <strong id="tlCurrentDate" style="color:var(--gold);font-size:.72rem"></strong>
+        </div>
+        <button class="btn-d" style="padding:6px 12px;font-size:.6rem;width:auto;white-space:nowrap;flex-shrink:0" onclick="removeTL()">Hapus</button>
+      </div>
+    </div>
+
+    <!-- Preset cepat -->
+    <div>
+      <div style="font-size:.52rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px">Preset Cepat</div>
+      <div class="tl-presets-grid">
+        <button class="tl-preset" onclick="setPreset(1,'hour',event)">+1 Jam</button>
+        <button class="tl-preset" onclick="setPreset(6,'hour',event)">+6 Jam</button>
+        <button class="tl-preset" onclick="setPreset(12,'hour',event)">+12 Jam</button>
+        <button class="tl-preset" onclick="setPreset(1,'day',event)">+1 Hari</button>
+        <button class="tl-preset" onclick="setPreset(3,'day',event)">+3 Hari</button>
+        <button class="tl-preset" onclick="setPreset(1,'week',event)">+1 Minggu</button>
+        <button class="tl-preset" onclick="setPreset(2,'week',event)">+2 Minggu</button>
+        <button class="tl-preset" onclick="setPreset(1,'month',event)">+1 Bulan</button>
+        <button class="tl-preset" onclick="setPreset(3,'month',event)">+3 Bulan</button>
+      </div>
+    </div>
+
+    <!-- Custom Picker -->
+    <div>
+      <div style="font-size:.52rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px">Pilih Waktu Spesifik</div>
+      <div class="cp-wrap">
+
+        <!-- Tanggal: Hari / Bulan / Tahun -->
+        <div style="font-size:.5rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;text-align:center">Tanggal</div>
+        <div class="cp-row">
+          <div class="cp-drum-wrap" id="cpDay">
+            <div class="cp-sel-bar"></div>
+            <div class="cp-drum" id="cpDayDrum"></div>
+          </div>
+          <div class="cp-sep">/</div>
+          <div class="cp-drum-wrap wide" id="cpMonth">
+            <div class="cp-sel-bar"></div>
+            <div class="cp-drum" id="cpMonthDrum"></div>
+          </div>
+          <div class="cp-sep">/</div>
+          <div class="cp-drum-wrap wide" id="cpYear">
+            <div class="cp-sel-bar"></div>
+            <div class="cp-drum" id="cpYearDrum"></div>
+          </div>
+        </div>
+
+        <!-- Waktu: Jam / Menit / Detik -->
+        <div style="font-size:.5rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-top:4px">Waktu</div>
+        <div class="cp-row">
+          <div class="cp-drum-wrap" id="cpHour">
+            <div class="cp-sel-bar"></div>
+            <div class="cp-drum" id="cpHourDrum"></div>
+          </div>
+          <div class="cp-sep">:</div>
+          <div class="cp-drum-wrap" id="cpMin">
+            <div class="cp-sel-bar"></div>
+            <div class="cp-drum" id="cpMinDrum"></div>
+          </div>
+          <div class="cp-sep">:</div>
+          <div class="cp-drum-wrap" id="cpSec">
+            <div class="cp-sel-bar"></div>
+            <div class="cp-drum" id="cpSecDrum"></div>
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="cp-preview" id="cpPreview"></div>
+      </div>
+    </div>
+
+    <button class="btn-g" onclick="saveTL()">🔒 Aktifkan Time-Lock</button>
+    <button class="btn-gh" onclick="closeTLModal()">Batal</button>
+  </div>
+</div>
+
+<div id="migBanner">
+  <div class="mig-dot"></div>
+  <span class="mig-text">Menyiapkan thumbnail</span>
+  <span class="mig-count" id="migCount">0/0</span>
+</div>
+<div id="toast"></div>
+<input type="file" id="fi" multiple accept="image/*,video/*,.gif" onchange="handleFiles(this.files)">
+
+<script>
+// ═══ STORAGE LAYER ═══
+// Digantikan oleh capacitor-filesystem.js (di-load di <head>)
+// opfsSave / opfsRead / opfsDelete / initOPFS / opfsClearAll tersedia dari sana.
+// Saat jalan sebagai APK → Capacitor Filesystem (device storage)
+// Saat jalan sebagai PWA → OPFS browser (backward-compatible)
+
+let db;
+const DB='VaultDB',VER=3,MS='media',AS='albums',SS='settings';
+
+// ── IndexedDB (untuk metadata + fallback) ──
+function openDB(){
+  return new Promise((res,rej)=>{
+    const r=indexedDB.open(DB,VER);
+    r.onupgradeneeded=e=>{
+      const d=e.target.result;
+      if(!d.objectStoreNames.contains(MS)){
+        const s=d.createObjectStore(MS,{keyPath:'id'});
+        s.createIndex('ts','timestamp');s.createIndex('alb','albumId');
+      } else {
+        const tx=e.target.transaction;const s=tx.objectStore(MS);
+        if(!s.indexNames.contains('ts')) s.createIndex('ts','timestamp');
+        if(!s.indexNames.contains('alb')) s.createIndex('alb','albumId');
+      }
+      if(!d.objectStoreNames.contains(AS)) d.createObjectStore(AS,{keyPath:'id'});
+      if(!d.objectStoreNames.contains(SS)) d.createObjectStore(SS,{keyPath:'key'});
+    };
+    r.onsuccess=e=>res(e.target.result);
+    r.onerror=()=>rej(r.error);
+    r.onblocked=()=>showToast('Refresh halaman lain yang membuka app ini');
+  });
+}
+const txs=(s,m='readonly')=>{
+  if(!db.objectStoreNames.contains(s)) throw new Error('Store not found: '+s);
+  return db.transaction(s,m).objectStore(s);
+};
+const dbAll=s=>new Promise((res,rej)=>{try{const r=txs(s).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>res([]);}catch(e){res([])}});
+const dbAdd=(s,v)=>new Promise((res,rej)=>{try{const r=txs(s,'readwrite').add(v);r.onsuccess=()=>res();r.onerror=()=>rej(r.error);}catch(e){rej(e)}});
+const dbPut=(s,v)=>new Promise((res,rej)=>{try{const r=txs(s,'readwrite').put(v);r.onsuccess=()=>res();r.onerror=()=>rej(r.error);}catch(e){rej(e)}});
+const dbDel=(s,id)=>new Promise((res,rej)=>{try{const r=txs(s,'readwrite').delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error);}catch(e){rej(e)}});
+
+
+// ═══ State ═══
+let allMedia=[],allAlbums=[],curFilter='all',curAlbum=null,lbIdx=0,upAlbId=null,actAlbId=null;
+let PIN=''; // akan diisi hash saat init()
+let selectedIds=new Set();
+let multiMode=false;
+let longPressTimer=null;
+let curSort='newest'; // newest | oldest | largest | name
+
+// ═══ URL Cache ═══
+const urlCache=new Map();
+const thumbCache=new Map();
+
+// getUrl — hanya panggil kalau m.blob sudah ada
+function getUrl(m){
+  if(!m.blob) return null;
+  // Kalau sudah ada di cache, cek apakah masih valid
+  if(urlCache.has(m.id)){
+    const cached = urlCache.get(m.id);
+    if(cached) return cached;
+    urlCache.delete(m.id); // hapus kalau null/undefined
+  }
+  const url = URL.createObjectURL(m.blob);
+  urlCache.set(m.id, url);
+  return url;
+}
+
+// getUrlAsync — load blob dulu kalau belum ada, lalu return URL
+async function getUrlAsync(m){
+  if(!m.blob) await getBlobLazy(m);
+  if(!m.blob) return null;
+  return getUrl(m);
+}
+
+// Fallback thumbnail kalau semua frame hitam atau video tidak bisa di-decode
+function generateVideoFallbackThumb(){
+  try{
+    const c=document.createElement('canvas'); c.width=160; c.height=160;
+    const ctx=c.getContext('2d');
+    // Background gradient gelap
+    const grad=ctx.createLinearGradient(0,0,160,160);
+    grad.addColorStop(0,'#1a1a24');
+    grad.addColorStop(1,'#0a0a0c');
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,160,160);
+    // Lingkaran icon play
+    ctx.beginPath();
+    ctx.arc(80,80,32,0,Math.PI*2);
+    ctx.fillStyle='rgba(201,168,76,0.2)';
+    ctx.fill();
+    ctx.strokeStyle='rgba(201,168,76,0.6)';
+    ctx.lineWidth=1.5;
+    ctx.stroke();
+    // Segitiga play
+    ctx.beginPath();
+    ctx.moveTo(70,62); ctx.lineTo(70,98); ctx.lineTo(100,80);
+    ctx.closePath();
+    ctx.fillStyle='rgba(201,168,76,0.85)';
+    ctx.fill();
+    return c.toDataURL('image/jpeg',0.7);
+  }catch(e){ return null; }
+}
+
+// ═══ Thumbnail Generator (dipanggil sekali saat upload) ═══
+function generateThumbFromBlob(blob, mime){
+  return new Promise(res=>{
+    const url=URL.createObjectURL(blob);
+    const vid=document.createElement('video');
+    const timeout = setTimeout(()=>{ URL.revokeObjectURL(url); res(generateVideoFallbackThumb()); }, 8000);
+
+    // Daftar waktu yang dicoba berurutan — skip kalau frame masih hitam
+    const attempts=[1, 3, 5, 0.5];
+    let attemptIdx=0;
+
+    function trySeek(){
+      if(attemptIdx >= attempts.length){
+        clearTimeout(timeout);
+        URL.revokeObjectURL(url);
+        // Semua attempt habis — generate fallback thumbnail icon video
+        res(generateVideoFallbackThumb());
+        return;
+      }
+      vid.currentTime = attempts[attemptIdx++];
+    }
+
+    function isFrameBlack(ctx, w, h){
+      try{
+        const data = ctx.getImageData(0, 0, w, h).data;
+        let sum = 0;
+        // Sample tiap 40 pixel supaya cepat
+        for(let i=0; i<data.length; i+=40*4) sum += data[i] + data[i+1] + data[i+2];
+        const avg = sum / (data.length / 40 / 4) / 3;
+        return avg < 12; // rata-rata brightness < 12 = dianggap hitam
+      }catch(e){ return false; }
+    }
+
+    vid.addEventListener('seeked',()=>{
+      try{
+        const c=document.createElement('canvas'); c.width=160; c.height=160;
+        const ctx=c.getContext('2d');
+        const vr=vid.videoWidth/vid.videoHeight;
+        let sx=0,sy=0,sw=vid.videoWidth,sh=vid.videoHeight;
+        if(vr>1){sx=(vid.videoWidth-vid.videoHeight)/2;sw=vid.videoHeight;}
+        else{sy=(vid.videoHeight-vid.videoWidth)/2;sh=vid.videoWidth;}
+        ctx.drawImage(vid,sx,sy,sw,sh,0,0,160,160);
+
+        // Kalau frame masih hitam dan masih ada attempt tersisa, coba waktu berikutnya
+        if(isFrameBlack(ctx, 160, 160) && attemptIdx < attempts.length){
+          trySeek();
+          return;
+        }
+
+        clearTimeout(timeout);
+        URL.revokeObjectURL(url);
+        res(c.toDataURL('image/jpeg',0.6));
+      }catch(e){ URL.revokeObjectURL(url); clearTimeout(timeout); res(null); }
+    });
+
+    vid.addEventListener('error',()=>{clearTimeout(timeout);URL.revokeObjectURL(url);res(null);},{once:true});
+    vid.muted=true; vid.playsInline=true;
+    vid.src=url;
+    vid.addEventListener('loadedmetadata',()=>{ trySeek(); },{once:true});
+    vid.load();
+  });
+}
+
+function generateThumbFromImageBlob(blob){
+  return new Promise(res=>{
+    const url=URL.createObjectURL(blob);
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        const c=document.createElement('canvas'); c.width=160; c.height=160;
+        const ctx=c.getContext('2d');
+        const ar=img.naturalWidth/img.naturalHeight;
+        let sx=0,sy=0,sw=img.naturalWidth,sh=img.naturalHeight;
+        if(ar>1){sx=(img.naturalWidth-img.naturalHeight)/2;sw=img.naturalHeight;}
+        else{sy=(img.naturalHeight-img.naturalWidth)/2;sh=img.naturalWidth;}
+        ctx.drawImage(img,sx,sy,sw,sh,0,0,160,160);
+        URL.revokeObjectURL(url);
+        res(c.toDataURL('image/jpeg',0.6));
+      }catch(e){URL.revokeObjectURL(url);res(null);}
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);res(null);};
+    img.src=url;
+  });
+}
+
+// ═══ Refresh Thumbnail Album ═══
+// Dipanggil setelah file dipindah — update thumbnail album yang terpengaruh
+function refreshAlbumThumbs(albumIds){
+  for(const albumId of albumIds){
+    const card=document.getElementById('albc-'+albumId);
+    if(!card) continue;
+    const slot=card.querySelector('.alb-bg-slot');
+    if(!slot) continue;
+    // Cari media pertama di album ini (setelah pemindahan)
+    const firstMedia=allMedia.find(m=>m.albumId===albumId);
+    if(!firstMedia){
+      // Album jadi kosong — tampilkan empty slot
+      slot.innerHTML=`<div class="alb-bg-empty"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
+    } else if(firstMedia.thumb){
+      // Punya thumbnail tersimpan — langsung update
+      slot.innerHTML=`<img class="alb-bg" src="${firstMedia.thumb}" alt="">`;
+    } else if((firstMedia.type==='photo'||firstMedia.type==='gif') && firstMedia.blob){
+      slot.innerHTML=`<img class="alb-bg" src="${getUrl(firstMedia)}" alt="">`;
+    } else if(firstMedia.type==='video'){
+      // Generate thumbnail async untuk video tanpa thumb
+      slot.classList.add('lazy-pending');
+      getBlobLazy(firstMedia).then(blob=>{
+        if(!blob) return;
+        genVideoThumb(firstMedia).then(dataUrl=>{
+          if(dataUrl){
+            slot.classList.remove('lazy-pending');
+            slot.innerHTML=`<img class="alb-bg" src="${dataUrl}" alt="">`;
+            firstMedia.thumb=dataUrl;
+            mediaPut(firstMedia).catch(()=>{});
+          }
+        });
+      });
+    }
+  }
+}
+
+// ═══ Migrasi Thumbnail Background ═══
+// Berjalan diam-diam setelah galeri tampil, generate thumb untuk file lama
+let thumbMigrationRunning = false;
+
+function showMigBanner(done, total){
+  const banner = document.getElementById('migBanner');
+  const count = document.getElementById('migCount');
+  if(!banner) return;
+  count.textContent = `${done}/${total}`;
+  banner.classList.add('show');
+}
+function hideMigBanner(){
+  const banner = document.getElementById('migBanner');
+  if(!banner) return;
+  banner.classList.remove('show');
+}
+
+async function migrateOldThumbnails(){
+  if(thumbMigrationRunning) return;
+
+  // Cek thumbnail hitam: data URL JPEG yang sangat kecil (<500 byte) hampir pasti hitam
+  function isLikelyBlackThumb(dataUrl){
+    if(!dataUrl) return false;
+    return dataUrl.length < 500;
+  }
+
+  const needsMigration = allMedia.filter(m =>
+    !m.thumb || (m.type==='video' && isLikelyBlackThumb(m.thumb))
+  );
+  if(needsMigration.length === 0) return;
+
+  thumbMigrationRunning = true;
+  let done = 0;
+  const total = needsMigration.length;
+
+  showMigBanner(done, total);
+
+  for(const m of needsMigration){
+    // Yield ke browser dulu tiap iterasi — galeri tetap responsif
+    await new Promise(r => setTimeout(r, 0));
+
+    // Skip kalau sudah punya thumb (mungkin diupdate dari albumCard async)
+    if(m.thumb) continue;
+
+    try{
+      // Load blob lazy — kalau belum di RAM
+      const blob = await getBlobLazy(m);
+      if(!blob) continue;
+
+      // Generate thumbnail sesuai tipe
+      let thumb = null;
+      if(m.type === 'video'){
+        thumb = await generateThumbFromBlob(blob, m.mime);
+      } else if(m.type === 'photo'){
+        thumb = await generateThumbFromImageBlob(blob);
+      } else if(m.type === 'gif'){
+        // GIF: pakai frame pertama saja
+        thumb = await generateThumbFromImageBlob(blob);
+      }
+
+      if(!thumb) continue;
+
+      // Simpan ke DB
+      m.thumb = thumb;
+      await mediaPut(m);
+      done++;
+
+      // Update banner counter
+      showMigBanner(done, total);
+
+      // Update kartu yang sedang tampil di layar secara langsung
+      const card = document.querySelector(`.photo-card[data-id="${m.id}"]`);
+      if(card){
+        const oldThumb = card.querySelector('.lazy-thumb');
+        // Kalau blob belum dimuat (masih pakai thumbnail), update gambarnya
+        if(oldThumb){ oldThumb.src = thumb; }
+        // Kalau masih shimmer kosong dan blob belum ada, isi dengan thumbnail
+        else if(card.classList.contains('lazy-pending') && !m.blob){
+          card.classList.remove('lazy-pending');
+          const isV = m.type==='video', isG = m.type==='gif';
+          const badge = isV
+            ? `<div class="media-badge"><svg viewBox="0 0 24 24" style="width:9px;height:9px;fill:white;stroke:none;display:inline-block;vertical-align:middle;margin-right:2px"><polygon points="5 3 19 12 5 21 5 3"/></svg>VIDEO</div>`
+            : isG ? `<div class="media-badge" style="background:rgba(100,50,200,.75)">GIF</div>` : '';
+          const img = document.createElement('img');
+          img.src = thumb; img.alt = m.name; img.className = 'lazy-thumb';
+          img.dataset.id = m.id; img.dataset.type = m.type;
+          img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+          const selCheck = card.querySelector('.sel-check');
+          card.insertBefore(img, selCheck ? selCheck.nextSibling : card.firstChild);
+          if(badge) card.insertAdjacentHTML('beforeend', badge);
+        }
+        // Update album card thumbnail juga kalau ini adalah media pertama di albumnya
+        if(m.albumId){
+          const albCard = document.getElementById('albc-' + m.albumId);
+          if(albCard){
+            const slot = albCard.querySelector('.alb-bg-slot');
+            // Cek apakah slot masih kosong/shimmer
+            if(slot && !slot.querySelector('img')){
+              slot.classList.remove('lazy-pending');
+              slot.innerHTML = `<img class="alb-bg" src="${thumb}" alt="">`;
+            }
+          }
+        }
+      }
+
+      // Jeda lebih panjang tiap 5 file supaya tidak monopoli thread
+      if(done % 5 === 0) await new Promise(r => setTimeout(r, 80));
+
+    } catch(e){
+      console.warn('Gagal generate thumb untuk:', m.id, e);
+    }
+  }
+
+  thumbMigrationRunning = false;
+  hideMigBanner();
+  if(done > 0) showToast(`✅ ${done} thumbnail diperbarui`);
+}
+
+// genVideoThumb — legacy, tetap dipakai di lightbox (pakai thumb tersimpan dulu)
+function genVideoThumb(m){
+  if(m.thumb) return Promise.resolve(m.thumb);
+  if(thumbCache.has(m.id)) return Promise.resolve(thumbCache.get(m.id));
+  return new Promise(res=>{
+    const url=getUrl(m);
+    if(!url){res(null);return;}
+    const vid=document.createElement('video');
+    vid.src=url;vid.muted=true;vid.playsInline=true;vid.currentTime=0.5;
+    vid.addEventListener('seeked',()=>{
+      try{
+        const c=document.createElement('canvas');c.width=320;c.height=320;
+        const ctx=c.getContext('2d');
+        const vr=vid.videoWidth/vid.videoHeight;
+        let sx=0,sy=0,sw=vid.videoWidth,sh=vid.videoHeight;
+        if(vr>1){sx=(vid.videoWidth-vid.videoHeight)/2;sw=vid.videoHeight;}
+        else{sy=(vid.videoHeight-vid.videoWidth)/2;sh=vid.videoWidth;}
+        ctx.drawImage(vid,sx,sy,sw,sh,0,0,320,320);
+        const d=c.toDataURL('image/jpeg',0.7);thumbCache.set(m.id,d);res(d);
+      }catch(e){res(null);}
+    },{once:true});
+    vid.addEventListener('error',()=>res(null),{once:true});
+    vid.load();
+  });
+}
+
+// ═══ PIN Hashing ═══
+async function hashPIN(pin){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('vault:'+pin));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ═══ Lock ═══
+let pin='';
+const fakeWords=['','m','mu','mus','musk'];
+
+function pn(n){
+  if(pin.length>=4) return;
+  pin+=n;
+  updateDots();
+  updateTyping();
+  if(pin.length===4) setTimeout(()=>checkPin(),150);
+}
+function pd(){
+  if(pin.length===0) return;
+  pin=pin.slice(0,-1);
+  updateDots();
+  updateTyping();
+}
+
+function updateDots(state){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('d'+i);
+    if(!d) continue;
+    if(state==='error'){
+      d.className='pin-dot error';
+    } else {
+      d.className='pin-dot'+(i<pin.length?' filled':'');
+    }
+  }
+}
+
+function updateTyping(){
+  const el=document.getElementById('lockPlaceholder');
+  if(!el) return;
+  if(pin.length===0){ el.textContent='Cari kata...'; el.style.color='#bbb'; }
+  else { el.textContent=fakeWords[pin.length]||'mus'; el.style.color='#333'; }
+}
+
+function dots(st){ updateDots(st==='e'?'error':null); } // legacy alias
+
+async function checkPin(){
+  const hashed = await hashPIN(pin);
+  if(hashed===PIN){
+    // Unlock berhasil
+    document.getElementById('lockScreen').classList.add('hidden');
+    document.getElementById('appScreen').classList.remove('hidden');
+    loadAll(); persist();
+    pushState('gallery');
+  } else {
+    updateDots('error');
+    if(navigator.vibrate) navigator.vibrate([80,40,80]);
+    setTimeout(()=>{
+      pin='';
+      updateDots();
+      updateTyping();
+    }, 600);
+  }
+}
+
+function lockApp(){
+  pin='';dots();
+  document.getElementById('lbVid').pause();
+  document.getElementById('lockScreen').classList.remove('hidden');
+  document.getElementById('appScreen').classList.add('hidden');
+  closeLb();
+}
+
+// ═══ Persist ═══
+async function persist(){
+  if(navigator.storage&&navigator.storage.persist){
+    const ok=await navigator.storage.persist();
+    if(ok) showToast('🔒 Storage dikunci — data aman');
+  }
+}
+
+// ═══ Load ═══
+async function loadAll(){
+  [allMedia,allAlbums]=await Promise.all([loadAllMedia(),dbAll(AS)]);
+  allMedia.sort((a,b)=>b.timestamp-a.timestamp);
+  render();updateStats();
+  // Jalankan migrasi thumbnail di background — tidak blocking, diam-diam
+  setTimeout(migrateOldThumbnails, 500);
+}
+
+function updateStats(){
+  document.getElementById('sT').textContent=allMedia.length;
+  document.getElementById('sA').textContent=allAlbums.length;
+  document.getElementById('sF').textContent=allMedia.filter(m=>m.fav).length;
+  // Pakai m.size (tersimpan di metadata) bukan m.blob.size supaya tidak perlu blob dimuat
+  document.getElementById('sS').textContent=(allMedia.reduce((s,m)=>s+(m.size||0),0)/1024/1024).toFixed(1)+' MB';
+}
+
+// ═══ Breadcrumb ═══
+function updateBc(){
+  const bc=document.getElementById('bc');
+  if(curAlbum===null){bc.innerHTML='<span class="bc-item"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Vault</span>';return;}
+  const a=allAlbums.find(x=>x.id===curAlbum);
+  bc.innerHTML=`<span class="bc-item" onclick="goHome()"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Vault</span><span class="bc-sep">›</span><span class="bc-item" style="display:flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>${a?a.name:'Album'}</span>`;
+}
+function goHome(){curAlbum=null;curFilter='all';document.querySelectorAll('.ftab').forEach((t,i)=>t.classList.toggle('active',i===0));updateBc();render();}
+
+// ═══ Filtered list ═══
+function filtered(){
+  let list;
+  if(curAlbum!==null){
+    list=allMedia.filter(m=>m.albumId===curAlbum);
+  } else if(curFilter==='all'){
+    list=allMedia.filter(m=>!m.albumId);
+  } else {
+    list=allMedia;
+  }
+  if(curFilter==='fav') list=list.filter(m=>m.fav);
+  else if(curFilter==='photo') list=list.filter(m=>m.type==='photo');
+  else if(curFilter==='video') list=list.filter(m=>m.type==='video');
+  else if(curFilter==='gif') list=list.filter(m=>m.type==='gif');
+  return sortedMedia(list);
+}
+
+// ═══ Virtual Scroll State ═══
+let vsItemSize=0; // tinggi satu baris (3 kolom)
+let vsBuffer=6;   // baris extra di atas dan bawah viewport
+let vsScrollEl=null;
+let vsLastRenderRange={start:-1,end:-1};
+
+function vsGetItemSize(){
+  // Ukuran kartu = lebar gallery / 3 (square aspect ratio) + 2px gap
+  const grid=document.getElementById('gallery');
+  if(!grid) return 120;
+  const w=grid.offsetWidth||window.innerWidth;
+  return Math.floor(w/3)+2;
+}
+
+// ═══ Render ═══
+function render(){
+  updateBc();
+  const grid=document.getElementById('gallery');
+  const list=filtered();
+
+  // Header HTML (album section + section label) — selalu dirender
+  let headerHtml='';
+  if(curAlbum===null&&curFilter==='all'){
+    if(allAlbums.length>0){
+      headerHtml+=`<div class="section-label"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Album (${allAlbums.length})</div>`;
+      headerHtml+=allAlbums.map(a=>albumCard(a)).join('');
+      headerHtml+=`<div class="album-new" onclick="openNewAlbum()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Album Baru</span></div>`;
+    }
+    if(list.length>0) headerHtml+=`<div class="section-label"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Tanpa Album (${list.length})</div>`;
+  }
+
+  if(list.length===0){
+    const emptyMsg=curAlbum!==null?'Album ini masih kosong<br>Tap + untuk menambah':allAlbums.length>0||curFilter!=='all'?'Tidak ada media ditemukan':'Vault masih kosong<br>Tap + untuk menambah media';
+    grid.innerHTML=headerHtml+`<div class="empty-state"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>${emptyMsg}</p></div>`;
+    return;
+  }
+
+  // Virtual scroll hanya aktif kalau item > 60 (20 baris) — di bawah itu render semua
+  if(list.length<=60){
+    grid.innerHTML=headerHtml+list.map((m,i)=>photoCard(m,i)).join('');
+    vsLastRenderRange={start:-1,end:-1};
+    requestAnimationFrame(attachLazyObserver);
+    return;
+  }
+
+  // Setup virtual scroll
+  vsItemSize=vsGetItemSize();
+  const cols=3;
+  const totalRows=Math.ceil(list.length/cols);
+  const totalH=totalRows*vsItemSize;
+
+  // Render struktur awal dengan spacer
+  grid.innerHTML=headerHtml+
+    `<div id="vs-top" style="grid-column:1/-1;height:0px"></div>`+
+    `<div id="vs-items" style="display:contents"></div>`+
+    `<div id="vs-bot" style="grid-column:1/-1;height:${totalH}px"></div>`;
+
+  vsLastRenderRange={start:-1,end:-1};
+  vsScrollEl=document.querySelector('.gallery-scroll');
+
+  // Render range awal
+  vsRenderRange(list, 0);
+
+  // Setup scroll listener
+  vsScrollEl.onscroll=()=>vsOnScroll(list);
+  requestAnimationFrame(attachLazyObserver);
+}
+
+function vsRenderRange(list, scrollTop){
+  const cols=3;
+  const viewH=window.innerHeight;
+  const startRow=Math.max(0,Math.floor(scrollTop/vsItemSize)-vsBuffer);
+  const endRow=Math.min(Math.ceil(list.length/cols), Math.ceil((scrollTop+viewH)/vsItemSize)+vsBuffer);
+  const startIdx=startRow*cols;
+  const endIdx=Math.min(list.length, endRow*cols);
+
+  // Tidak perlu re-render kalau range sama
+  if(vsLastRenderRange.start===startIdx && vsLastRenderRange.end===endIdx) return;
+  vsLastRenderRange={start:startIdx,end:endIdx};
+
+  const topH=startRow*vsItemSize;
+  const botH=Math.max(0,(Math.ceil(list.length/cols)-endRow)*vsItemSize);
+
+  const topEl=document.getElementById('vs-top');
+  const botEl=document.getElementById('vs-bot');
+  const itemsEl=document.getElementById('vs-items');
+  if(!topEl||!botEl||!itemsEl) return;
+
+  topEl.style.height=topH+'px';
+  botEl.style.height=botH+'px';
+  itemsEl.innerHTML=list.slice(startIdx,endIdx).map((m,i)=>photoCard(m,startIdx+i)).join('');
+
+  requestAnimationFrame(attachLazyObserver);
+}
+
+function vsOnScroll(list){
+  if(!vsScrollEl) return;
+  vsRenderRange(list, vsScrollEl.scrollTop);
+}
+
+function albumCard(a){
+  const thumb=allMedia.find(m=>m.albumId===a.id);
+  const cnt=allMedia.filter(m=>m.albumId===a.id).length;
+  const emptySlot=`<div class="alb-bg-empty"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
+
+  let thumbHtml;
+  if(!thumb){
+    // Album kosong
+    thumbHtml=emptySlot;
+  } else if(thumb.thumb){
+    // ✅ Pakai thumbnail tersimpan — berlaku untuk foto DAN video, langsung muncul tanpa buka blob
+    thumbHtml=`<img class="alb-bg" src="${thumb.thumb}" alt="">`;
+  } else if((thumb.type==='photo'||thumb.type==='gif') && thumb.blob){
+    // Fallback: file lama yang belum punya thumb tersimpan, blob sudah di RAM
+    thumbHtml=`<img class="alb-bg" src="${getUrl(thumb)}" alt="">`;
+  } else {
+    // Fallback: video lama tanpa thumb — generate async seperti sebelumnya
+    thumbHtml=`<div class="alb-bg-slot lazy-pending" id="albslot-${a.id}"></div>`;
+  }
+
+  const html=`<div class="album-card" id="albc-${a.id}" onclick="openAlbum('${a.id}')">
+    <div class="alb-bg-slot">${thumbHtml}</div>
+    <div class="alb-overlay"><div class="alb-name"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}</div><div class="alb-count">${cnt} file</div></div>
+    <button class="alb-menu" onclick="openAas(event,'${a.id}')"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="white" stroke="none"/><circle cx="12" cy="12" r="1" fill="white" stroke="none"/><circle cx="12" cy="19" r="1" fill="white" stroke="none"/></svg></button>
+  </div>`;
+
+  // Hanya generate async untuk file lama yang belum punya thumb tersimpan
+  if(thumb && !thumb.thumb && thumb.type==='video'){
+    setTimeout(async ()=>{
+      const card=document.getElementById('albc-'+a.id);
+      if(!card) return;
+      const slot=card.querySelector('.alb-bg-slot');
+      // Load blob dulu secara lazy
+      const blob = await getBlobLazy(thumb);
+      if(!blob) return;
+      const dataUrl = await genVideoThumb(thumb);
+      if(dataUrl && slot){
+        slot.classList.remove('lazy-pending');
+        slot.innerHTML=`<img class="alb-bg" src="${dataUrl}" alt="">`;
+        // Simpan thumb ke DB supaya tidak perlu generate lagi
+        thumb.thumb = dataUrl;
+        mediaPut(thumb).catch(()=>{});
+      }
+    },0);
+  }
+  return html;
+}
+
+function photoCard(m,i){
+  const isV=m.type==='video';
+  const isG=m.type==='gif';
+  const isSel=selectedIds.has(m.id);
+
+  // Tampilkan thumbnail tersimpan dulu sebagai preview cepat
+  // Blob asli dimuat lazy via IntersectionObserver
+  const thumbSrc=m.thumb||null;
+  const hasBlobNow=!!m.blob;
+  const url=hasBlobNow?getUrl(m):null;
+
+  // Konten media: video SELALU pakai thumbnail img di gallery (tidak pernah pakai <video> element)
+  // <video> hanya dibuat saat lightbox. Foto/GIF pakai blob asli kalau sudah di RAM.
+  let mediaHtml;
+  if(isV){
+    // Video: selalu thumbnail — blob/video element tidak pernah dimuat di gallery
+    const badge=`<div class="media-badge"><svg viewBox="0 0 24 24" style="width:9px;height:9px;fill:white;stroke:none;display:inline-block;vertical-align:middle;margin-right:2px"><polygon points="5 3 19 12 5 21 5 3"/></svg>VIDEO</div>`;
+    if(thumbSrc){
+      mediaHtml=`<img src="${thumbSrc}" alt="${m.name}" class="lazy-thumb" data-id="${m.id}" data-type="${m.type}">${badge}`;
+    } else {
+      mediaHtml=badge; // shimmer + generate via migrasi background
+    }
+  } else if(hasBlobNow && url){
+    // Foto/GIF: blob sudah di RAM — tampilkan langsung
+    if(isG){
+      // GIF: tampilkan thumbnail dulu (statis), blob sudah siap untuk preview gerak
+      const gifSrc = thumbSrc || url;
+      mediaHtml=`<img src="${gifSrc}" alt="${m.name}" class="gif-thumb" data-id="${m.id}" style="width:100%;height:100%;object-fit:cover;display:block"><div class="media-badge gif-badge" style="background:rgba(100,50,200,.75);cursor:pointer">GIF</div>`;
+    } else {
+      mediaHtml=`<img src="${url}" alt="${m.name}" loading="lazy">`;
+    }
+  } else if(thumbSrc){
+    // Blob belum dimuat — tampilkan thumbnail dulu, blob load via observer
+    const badge=isV?`<div class="media-badge"><svg viewBox="0 0 24 24" style="width:9px;height:9px;fill:white;stroke:none;display:inline-block;vertical-align:middle;margin-right:2px"><polygon points="5 3 19 12 5 21 5 3"/></svg>VIDEO</div>`:isG?`<div class="media-badge gif-badge" style="background:rgba(100,50,200,.75)" onclick="toggleGifPlay(event,'${m.id}')">GIF</div>`:'';
+    mediaHtml=`<img src="${thumbSrc}" alt="${m.name}" class="lazy-thumb" data-id="${m.id}" data-type="${m.type}">${badge}`;
+  } else {
+    // Tidak ada thumb, tidak ada blob — shimmer + lazy load
+    const badge=isV?`<div class="media-badge"><svg viewBox="0 0 24 24" style="width:9px;height:9px;fill:white;stroke:none;display:inline-block;vertical-align:middle;margin-right:2px"><polygon points="5 3 19 12 5 21 5 3"/></svg>VIDEO</div>`:isG?`<div class="media-badge gif-badge" style="background:rgba(100,50,200,.75)" onclick="toggleGifPlay(event,'${m.id}')">GIF</div>`:'';
+    mediaHtml=badge;
+  }
+
+  // Video tidak perlu lazy load blob — pakai thumbnail. Foto/GIF perlu kalau blob belum di RAM.
+  const needsLazy=!isV && !hasBlobNow;
+  return `<div class="photo-card${isSel?' selected':''}${needsLazy?' lazy-pending':''}" data-id="${m.id}" data-idx="${i}"
+    onclick="onCardClick(event,'${m.id}',${i})"
+    ontouchstart="startLongPress('${m.id}')" ontouchend="cancelLongPress()" ontouchcancel="cancelLongPress()"
+    onmousedown="startLongPress('${m.id}')" onmouseup="cancelLongPress()" onmouseleave="cancelLongPress()">
+    <div class="sel-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    ${mediaHtml}
+    ${m.fav?`<div class="fav-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>`:''}
+  </div>`;
+}
+
+// ═══ IntersectionObserver — Lazy Load Blob ═══
+let lazyObserver = null;
+
+function initLazyObserver(){
+  if(lazyObserver) lazyObserver.disconnect();
+  lazyObserver = new IntersectionObserver(async (entries) => {
+    for(const entry of entries){
+      if(!entry.isIntersecting) continue;
+      lazyObserver.unobserve(entry.target);
+      await forceLazyLoad(entry.target);
+    }
+  },{rootMargin:'200px 0px'});
+}
+
+function attachLazyObserver(){
+  if(!lazyObserver) initLazyObserver();
+  const cards = document.querySelectorAll('.photo-card.lazy-pending');
+  const galleryScroll = document.querySelector('.gallery-scroll');
+  const scrollRect = galleryScroll ? galleryScroll.getBoundingClientRect() : document.documentElement.getBoundingClientRect();
+
+  cards.forEach(card=>{
+    const rect = card.getBoundingClientRect();
+    const isVisible = rect.top < scrollRect.bottom + 200 && rect.bottom > scrollRect.top - 200;
+    if(isVisible){
+      // Kartu sudah di viewport saat observer baru dibuat —
+      // force load langsung tanpa tunggu IntersectionObserver trigger
+      forceLazyLoad(card);
+    } else {
+      lazyObserver.observe(card);
+    }
+  });
+}
+
+// Force load satu kartu — dipanggil untuk kartu yang sudah di viewport
+async function forceLazyLoad(card){
+  const id = card.dataset.id;
+  const m = allMedia.find(x=>x.id===id);
+  if(!m){ card.classList.remove('lazy-pending'); return; }
+
+  card.classList.remove('lazy-pending');
+  const isV=m.type==='video', isG=m.type==='gif';
+  const oldThumb = card.querySelector('.lazy-thumb');
+  const selCheck = card.querySelector('.sel-check');
+
+  // VIDEO: di gallery selalu pakai thumbnail gambar — TIDAK pakai <video> element
+  // <video> hanya dibuat saat lightbox dibuka. Ini kunci performa gallery banyak video.
+  if(isV){
+    // Kalau sudah ada thumbnail tersimpan, langsung pakai — tidak perlu buka blob sama sekali
+    if(m.thumb){
+      if(oldThumb){ oldThumb.src = m.thumb; return; }
+      const img=document.createElement('img');
+      img.src=m.thumb; img.alt=m.name; img.className='lazy-thumb';
+      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      card.insertBefore(img, selCheck ? selCheck.nextSibling : card.firstChild);
+      return;
+    }
+    // Belum ada thumbnail — generate dari blob (video lama sebelum fitur thumb)
+    const blob = await getBlobLazy(m);
+    if(!blob) return;
+    const dataUrl = await generateThumbFromBlob(blob, m.mime);
+    if(dataUrl){
+      // Simpan supaya tidak perlu generate lagi
+      m.thumb = dataUrl;
+      mediaPut(m).catch(()=>{});
+      if(oldThumb){ oldThumb.src = dataUrl; return; }
+      const img=document.createElement('img');
+      img.src=dataUrl; img.alt=m.name; img.className='lazy-thumb';
+      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      card.insertBefore(img, selCheck ? selCheck.nextSibling : card.firstChild);
+    }
+    return;
+  }
+
+  // FOTO & GIF: load blob asli supaya kualitas penuh
+  if(!m.blob) await getBlobLazy(m);
+  if(!m.blob) return;
+
+  urlCache.delete(id);
+  const url = getUrl(m);
+  if(!url) return;
+
+  if(oldThumb) oldThumb.remove();
+
+  if(isG){
+    // GIF: tampilkan thumbnail statis dulu, badge bisa di-tap untuk gerak
+    const img=document.createElement('img');
+    img.src = m.thumb || url; // thumb statis kalau ada, fallback ke blob
+    img.alt = m.name;
+    img.className = 'gif-thumb';
+    img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+    card.insertBefore(img, selCheck ? selCheck.nextSibling : card.firstChild);
+    // Pastikan badge GIF sudah ada dan punya onclick
+    let badge = card.querySelector('.gif-badge');
+    if(!badge){
+      badge = document.createElement('div');
+      badge.className = 'media-badge gif-badge';
+      badge.style.background = 'rgba(100,50,200,.75)';
+      badge.textContent = 'GIF';
+      card.appendChild(badge);
+    }
+    badge.onclick = (e) => toggleGifPlay(e, m.id);
+  } else {
+    const img=document.createElement('img');
+    img.src=url; img.alt=m.name;
+    img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+    card.insertBefore(img, selCheck ? selCheck.nextSibling : card.firstChild);
+  }
+}
+
+function setFilter(f,el){curFilter=f;document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));el.classList.add('active');render();}
+async function openAlbum(id){
+  curAlbum=id; updateBc();
+  // Preload blob untuk semua file di album ini sebelum render
+  // supaya kartu langsung tampil tanpa perlu lazy load
+  const albumMedia = allMedia.filter(m=>m.albumId===id);
+  await Promise.all(albumMedia.map(m=> m.blob ? null : getBlobLazy(m)).filter(Boolean));
+  render();
+  pushState('album');
+}
+
+// ═══ Album Actions ═══
+function openAas(e,id){e.stopPropagation();actAlbId=id;const a=allAlbums.find(x=>x.id===id);document.getElementById('aasT').textContent=a?a.name:'Album';document.getElementById('aas').classList.remove('hidden');}
+function closeAas(){document.getElementById('aas').classList.add('hidden');}
+function doRename(){closeAas();const a=allAlbums.find(x=>x.id===actAlbId);document.getElementById('rnI').value=a?a.name:'';document.getElementById('renameMod').classList.remove('hidden');setTimeout(()=>document.getElementById('rnI').focus(),300);}
+function closeRename(){document.getElementById('renameMod').classList.add('hidden');}
+async function confirmRename(){
+  const name=document.getElementById('rnI').value.trim();if(!name)return;
+  const a=allAlbums.find(x=>x.id===actAlbId);if(!a)return;
+  a.name=name;await dbPut(AS,a);closeRename();render();updateStats();showToast(`Album diganti jadi "${name}"`);
+}
+function doDelete(){
+  closeAas();
+  const a=allAlbums.find(x=>x.id===actAlbId);
+  const cnt=allMedia.filter(m=>m.albumId===actAlbId).length;
+  document.getElementById('delMsg').textContent=`Yakin hapus album "${a?a.name:'ini'}"? ${cnt>0?`Semua ${cnt} file di dalamnya juga akan ikut terhapus permanen.`:'Album kosong, langsung dihapus.'}`;
+  document.getElementById('delMod').classList.remove('hidden');
+}
+function closeDelMod(){document.getElementById('delMod').classList.add('hidden');}
+async function confirmDel(){
+  const inAlb=allMedia.filter(m=>m.albumId===actAlbId);
+  for(const m of inAlb){
+    await mediaDel(m.id);
+    urlCache.delete(m.id);
+  }
+  allMedia=allMedia.filter(m=>m.albumId!==actAlbId);
+  await dbDel(AS,actAlbId);
+  allAlbums=allAlbums.filter(a=>a.id!==actAlbId);
+  closeDelMod();
+  if(curAlbum===actAlbId) goHome(); else{render();updateStats();}
+  showToast(`Album dihapus beserta ${inAlb.length} file di dalamnya`);
+}
+
+// ═══ Upload ═══
+function openUpload(){document.getElementById('uploadSheet').classList.remove('hidden');}
+function closeUpload(){document.getElementById('uploadSheet').classList.add('hidden');}
+const dz=document.getElementById('dz');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');handleFiles(e.dataTransfer.files);closeUpload();});
+async function handleFiles(files){
+  closeUpload();
+  const valid=Array.from(files).filter(f=>f.type.startsWith('image/')||f.type.startsWith('video/'));
+  if(valid.length===0) return;
+
+  // Kalau cuma 1 file, tidak perlu modal progress
+  const showProgress = valid.length > 1;
+  const modal=document.getElementById('backupModal');
+  const bar=document.getElementById('backupBar');
+  const msg=document.getElementById('backupMsg');
+  const title=document.getElementById('backupTitle');
+
+  if(showProgress){
+    modal.classList.remove('hidden');
+    title.textContent='Menambahkan File...';
+    bar.style.width='0%';
+    msg.textContent=`Memproses 0/${valid.length} file...`;
+  }
+
+  let count=0, failed=0;
+  for(let i=0; i<valid.length; i++){
+    const f=valid[i];
+    if(showProgress){
+      bar.style.width=((i/valid.length)*100)+'%';
+      msg.textContent=`Memproses ${i+1}/${valid.length}: ${f.name.length>30?f.name.slice(0,28)+'…':f.name}`;
+      await new Promise(r=>setTimeout(r,0));
+    }
+    try{
+      const blob=f.slice(0,f.size,f.type);
+      const isVideo=f.type.startsWith('video/');
+      const isGif=f.type==='image/gif';
+
+      // Generate thumbnail kecil (160x160) sekali saat upload — disimpan permanen di DB
+      let thumb=null;
+      try{
+        if(isVideo) thumb=await generateThumbFromBlob(blob,f.type);
+        else if(!isGif) thumb=await generateThumbFromImageBlob(blob);
+      }catch(e){ thumb=null; }
+
+      const item={
+        id: crypto.randomUUID(),
+        name:f.name.replace(/\.[^.]+$/,''),
+        blob:blob,
+        thumb:thumb,
+        type:isGif?'gif':isVideo?'video':'photo',
+        mime:f.type,
+        timestamp:Date.now(),
+        date:new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
+        fav:false,
+        size:f.size,
+        albumId:upAlbId||null
+      };
+      await mediaAdd(item);
+      allMedia.unshift(item);
+      count++;
+    } catch(e){
+      console.error('Gagal simpan file:',e);
+      failed++;
+    }
+  }
+
+  if(showProgress){
+    bar.style.width='100%';
+    title.textContent='Selesai!';
+    msg.textContent=`${count} file berhasil ditambahkan${failed>0?`, ${failed} gagal`:''}.`;
+    setTimeout(()=>modal.classList.add('hidden'), 1500);
+  }
+
+  if(count){ render(); updateStats(); }
+  if(!showProgress && count) showToast(`${count} file ditambahkan`);
+  if(failed>0 && !showProgress) showToast(`❌ ${failed} file gagal disimpan`);
+  document.getElementById('fi').value='';
+}
+
+// ═══ Picker ═══
+function openPicker(){
+  const pl=document.getElementById('pl');
+  pl.innerHTML=`<div class="pi${!upAlbId?' sel':''}" onclick="selAlb(null)"><span><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Tanpa Album</span><span class="pi-c"></span></div>`
+    +allAlbums.map(a=>`<div class="pi${upAlbId===a.id?' sel':''}" onclick="selAlb('${a.id}')"><span><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}</span><span class="pi-c">${allMedia.filter(m=>m.albumId===a.id).length} file</span></div>`).join('');
+  document.getElementById('pickerSheet').classList.remove('hidden');
+}
+function closePicker(){document.getElementById('pickerSheet').classList.add('hidden');}
+function selAlb(id){upAlbId=id;const a=id?allAlbums.find(x=>x.id===id):null;document.getElementById('upAlbLbl').innerHTML=a?`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}`:'<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Tanpa Album';closePicker();}
+function openNewAlbum(){closePicker();closeUpload();document.getElementById('naI').value='';document.getElementById('newAlbumMod').classList.remove('hidden');setTimeout(()=>document.getElementById('naI').focus(),300);}
+function closeNewAlbum(){document.getElementById('newAlbumMod').classList.add('hidden');}
+async function createAlbum(){
+  const name=document.getElementById('naI').value.trim();if(!name)return;
+  const a={id:Date.now()+'',name,createdAt:Date.now()};
+  await dbAdd(AS,a);allAlbums.push(a);upAlbId=a.id;
+  document.getElementById('upAlbLbl').innerHTML=`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${name}`;
+  closeNewAlbum();render();updateStats();showToast(`Album "${name}" dibuat`);
+}
+
+// ═══ Lightbox UI toggle ═══
+let uiVisible=true;
+function toggleLbUI(){
+  uiVisible=!uiVisible;
+  setLbUIVisible(uiVisible);
+}
+function setLbUIVisible(v){
+  uiVisible=v;
+  const top=document.getElementById('lbTopbar');
+  const bot=document.getElementById('lbInfobar');
+  const prev=document.getElementById('lbPrev');
+  const next=document.getElementById('lbNext');
+  const vc=document.getElementById('vidControls');
+  const vid=document.getElementById('lbVid');
+  const isVideo=(vid.style.display!=='none'&&vid.src);
+  if(v){
+    top.classList.remove('ui-hidden');bot.classList.remove('ui-hidden');
+    prev.classList.remove('ui-hidden');next.classList.remove('ui-hidden');
+    if(isVideo) vc.style.display='flex';
+  } else {
+    top.classList.add('ui-hidden');bot.classList.add('ui-hidden');
+    prev.classList.add('ui-hidden');next.classList.add('ui-hidden');
+    vc.style.display='none';
+  }
+}
+
+// ═══ Custom video controls ═══
+let vidInterval=null;
+function startVidInterval(){
+  clearInterval(vidInterval);
+  vidInterval=setInterval(updateVidProgress,250);
+}
+function stopVidInterval(){ clearInterval(vidInterval); }
+function fmtTime(s){ const m=Math.floor(s/60);return m+':'+(String(Math.floor(s%60)).padStart(2,'0')); }
+function updateVidProgress(){
+  const vid=document.getElementById('lbVid');
+  if(!vid.duration) return;
+  const pct=(vid.currentTime/vid.duration)*100;
+  document.getElementById('vidProgress').style.width=pct+'%';
+  document.getElementById('vidThumb').style.left=pct+'%';
+  document.getElementById('vidCurTime').textContent=fmtTime(vid.currentTime);
+  document.getElementById('vidDuration').textContent=fmtTime(vid.duration);
+  // Update play/pause icon
+  const icon=document.getElementById('vidPlayIcon');
+  if(vid.paused){
+    icon.innerHTML='<polygon points="5 3 19 12 5 21 5 3"/>';
+  } else {
+    icon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+  }
+}
+function toggleVideoPlay(){
+  const vid=document.getElementById('lbVid');
+  if(vid.paused) vid.play(); else vid.pause();
+  updateVidProgress();
+}
+function skipVideo(sec){
+  const vid=document.getElementById('lbVid');
+  vid.currentTime=Math.max(0,Math.min(vid.duration||0,vid.currentTime+sec));
+  updateVidProgress();
+}
+function seekVideo(e){
+  const vid=document.getElementById('lbVid');
+  if(!vid.duration) return;
+  const wrap=document.getElementById('vidProgressWrap');
+  const rect=wrap.getBoundingClientRect();
+  const pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+  vid.currentTime=pct*vid.duration;
+  updateVidProgress();
+}
+
+// Progress bar drag — touch & mouse
+(function(){
+  let dragging=false;
+
+  function getClientX(e){ return e.touches?e.touches[0].clientX:(e.changedTouches?e.changedTouches[0].clientX:e.clientX); }
+
+  function onDragStart(e){
+    e.stopPropagation();
+    dragging=true;
+    doSeek(e);
+  }
+  function onDragMove(e){
+    if(!dragging) return;
+    e.preventDefault();
+    e.stopPropagation();
+    doSeek(e);
+  }
+  function onDragEnd(e){
+    if(!dragging) return;
+    e.stopPropagation();
+    dragging=false;
+    doSeek(e);
+  }
+  function doSeek(e){
+    const vid=document.getElementById('lbVid');
+    if(!vid.duration) return;
+    const wrap=document.getElementById('vidProgressWrap');
+    const rect=wrap.getBoundingClientRect();
+    const pct=Math.max(0,Math.min(1,(getClientX(e)-rect.left)/rect.width));
+    vid.currentTime=pct*vid.duration;
+    updateVidProgress();
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const wrap=document.getElementById('vidProgressWrap');
+    // Touch
+    wrap.addEventListener('touchstart',onDragStart,{passive:false});
+    wrap.addEventListener('touchmove',onDragMove,{passive:false});
+    wrap.addEventListener('touchend',onDragEnd,{passive:false});
+    // Mouse
+    wrap.addEventListener('mousedown',onDragStart);
+    window.addEventListener('mousemove',e=>{ if(dragging){ e.preventDefault(); onDragMove(e); } });
+    window.addEventListener('mouseup',e=>{ if(dragging) onDragEnd(e); });
+  });
+})();
+
+// ═══ Lightbox ═══
+async function openLb(i){
+  lbIdx=i;
+  const list=filtered();
+  const m=list[i];
+  if(m && !m.blob) await getBlobLazy(m); // pastikan blob tersedia sebelum buka lightbox
+  uiVisible=true;
+  document.getElementById('lightbox').classList.remove('hidden');
+  setLbUIVisible(true);
+  showLb();showZH();pushState('lightbox');
+}
+function closeLb(){
+  resetLandscapeIfNeeded();
+  document.getElementById('lightbox').classList.add('hidden');
+  const vid=document.getElementById('lbVid');
+  vid.pause();vid.src='';
+  stopVidInterval();
+  document.getElementById('vidControls').style.display='none';
+  if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+  resetZoom();
+}
+function showLb(anim){
+  const list=filtered();const m=list[lbIdx];if(!m)return;
+  const img=document.getElementById('lbImg'),vid=document.getElementById('lbVid'),gif=document.getElementById('lbGif');
+  const url=getUrl(m);resetZoom();
+  // Hide all first
+  img.style.display='none';vid.style.display='none';gif.style.display='none';
+  // Tampilkan tombol rotate hanya untuk video
+  document.getElementById('lbRotateBtn').style.display = m.type==='video' ? 'flex' : 'none';
+  if(m.type==='video'){
+    vid.style.display='block';
+    // Stop interval dan bersihkan sebelum ganti video
+    stopVidInterval();
+    vid.pause();
+    vid.src='';
+    vid.load();
+    // Hapus semua listener lama dengan clone node
+    const newVid = vid.cloneNode(false);
+    newVid.style.display='block';
+    vid.parentNode.replaceChild(newVid, vid);
+    const freshVid = document.getElementById('lbVid');
+    freshVid.src=url;
+    freshVid.load();
+    // Hide custom controls until metadata loaded
+    document.getElementById('vidControls').style.display='none';
+    freshVid.addEventListener('loadedmetadata',()=>{
+      updateVidProgress();
+      if(uiVisible) document.getElementById('vidControls').style.display='flex';
+      // Tidak auto-fullscreen — biarkan user pakai tombol rotate
+    },{once:true});
+    freshVid.addEventListener('play',startVidInterval);
+    freshVid.addEventListener('pause',stopVidInterval);
+    freshVid.addEventListener('ended',()=>{ stopVidInterval(); updateVidProgress(); });
+    freshVid.play().catch(()=>{});
+  } else if(m.type==='gif'){
+    gif.style.display='block';
+    gif.src=url;
+  } else {
+    img.style.display='block';
+    img.src=url;
+    if(anim){img.classList.add(anim);img.onanimationend=()=>img.classList.remove(anim);}
+  }
+  document.getElementById('lbN').textContent=m.name;
+  document.getElementById('lbD').textContent=m.date;
+  document.getElementById('lbC').textContent=`${lbIdx+1} / ${list.length}`;
+  document.getElementById('lbFav').className='lb-fav-btn'+(m.fav?' active':'');
+  // File info
+  const mb=m.size?(m.size/1024/1024).toFixed(2)+' MB':'—';
+  document.getElementById('lbSize').textContent=mb;
+  const alb=m.albumId?allAlbums.find(x=>x.id===m.albumId):null;
+  document.getElementById('lbAlbTag').textContent=alb?alb.name:'Tanpa Album';
+  document.getElementById('lbDim').textContent='—';
+  if(m.type==='photo'||m.type==='gif'){
+    const tmpImg=new Image();
+    tmpImg.onload=()=>{document.getElementById('lbDim').textContent=`${tmpImg.naturalWidth}×${tmpImg.naturalHeight}`;};
+    tmpImg.src=getUrl(m);
+  }
+}
+// Tap anywhere on media area toggles UI
+// Double tap zooms (handled in touchend below)
+document.getElementById('lbW').addEventListener('click',e=>{
+  if(e.target.closest('.lb-arrow')) return;
+  // Check it wasn't a swipe
+  if(tMoved) return;
+  toggleLbUI();
+});
+function lbNav(dir){const l=filtered();if(l.length<=1)return;resetLandscapeIfNeeded();lbIdx=(lbIdx+dir+l.length)%l.length;setLbUIVisible(false);showLb(dir>0?'al':'ar');}
+async function toggleFav(){
+  const m=filtered()[lbIdx];if(!m)return;const orig=allMedia.find(x=>x.id===m.id);if(!orig)return;
+  orig.fav=!orig.fav;await mediaPut(orig);showLb();render();updateStats();showToast(orig.fav?'★ Ditambah ke favorit':'Dihapus dari favorit');
+}
+let _pendingDeleteId=null;
+function deleteLb(){
+  const m=filtered()[lbIdx];if(!m)return;
+  _pendingDeleteId=m.id;
+  document.getElementById('confirmDelMsg').textContent=`Hapus "${m.name}"? File tidak bisa dikembalikan.`;
+  closeLb();
+  setTimeout(()=>document.getElementById('confirmDelSheet').classList.remove('hidden'),50);
+}
+function closeConfirmDel(){document.getElementById('confirmDelSheet').classList.add('hidden');_pendingDeleteId=null;}
+async function doConfirmDel(){
+  const id=_pendingDeleteId; if(!id) return;
+  closeConfirmDel();
+  await mediaDel(id);
+  urlCache.delete(id);
+  allMedia=allMedia.filter(x=>x.id!==id);
+  render();updateStats();showToast('File dihapus');
+}
+
+// ═══ Swipe ═══
+let tsx=0,tsy=0,tMoved=false;
+document.getElementById('lbW').addEventListener('touchstart',e=>{if(e.touches.length===1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;tMoved=false;}},{passive:true});
+document.getElementById('lbW').addEventListener('touchmove',e=>{if(e.touches.length===1){const dx=e.touches[0].clientX-tsx,dy=e.touches[0].clientY-tsy;if(Math.abs(dx)>8||Math.abs(dy)>8) tMoved=true;}},{passive:true});
+document.getElementById('lbW').addEventListener('touchend',e=>{
+  if(curScale>1.05) return;
+  const dx=e.changedTouches[0].clientX-tsx,dy=e.changedTouches[0].clientY-tsy;
+  if(tMoved && Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>50){
+    // Swipe → navigate + force hide UI
+    lbNav(dx<0?1:-1);
+  }
+  // tap (click event handles toggle)
+});
+
+// ═══ Zoom ═══
+let curScale=1,lastScale=1,panX=0,panY=0,lastPX=0,lastPY=0,lastTap=0,pinchD=0;
+function resetZoom(){curScale=1;lastScale=1;panX=0;panY=0;lastPX=0;lastPY=0;applyZ();}
+function applyZ(){document.getElementById('lbImg').style.transform=`scale(${curScale}) translate(${panX}px,${panY}px)`;}
+function getDist(t){return Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);}
+function showZH(){const h=document.getElementById('zh');h.classList.add('show');setTimeout(()=>h.classList.remove('show'),2000);}
+const lbW=document.getElementById('lbW');
+lbW.addEventListener('touchstart',e=>{if(e.touches.length===2){e.preventDefault();pinchD=getDist(e.touches);lastScale=curScale;}},{passive:false});
+lbW.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){e.preventDefault();curScale=Math.min(5,Math.max(1,lastScale*(getDist(e.touches)/pinchD)));applyZ();}
+  else if(e.touches.length===1&&curScale>1){e.preventDefault();panX=lastPX+(e.touches[0].clientX-tsx)/curScale;panY=lastPY+(e.touches[0].clientY-tsy)/curScale;applyZ();}
+},{passive:false});
+lbW.addEventListener('touchend',e=>{
+  if(e.touches.length===0){
+    lastPX=panX;lastPY=panY;if(curScale<1.05)resetZoom();
+    const now=Date.now();
+    if(now-lastTap<300){
+      // Double tap: toggle zoom
+      curScale>1?resetZoom():(()=>{curScale=2.5;applyZ();})();
+    }
+    lastTap=now;
+  }
+});
+lbW.addEventListener('wheel',e=>{e.preventDefault();curScale=Math.min(5,Math.max(1,curScale-e.deltaY*.005));if(curScale<=1)resetZoom();else applyZ();},{passive:false});
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').classList.contains('hidden'))return;
+  if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);
+});
+
+// ═══ Toast ═══
+let tt;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2500);}
+
+// ═══ Sort ═══
+const sortLabels={newest:'Terbaru',oldest:'Terlama',largest:'Terbesar',name:'A–Z'};
+const sortOrder=['newest','oldest','largest','name'];
+function cycleSort(){
+  const idx=sortOrder.indexOf(curSort);
+  curSort=sortOrder[(idx+1)%sortOrder.length];
+  document.getElementById('sortBtn').lastChild.textContent=sortLabels[curSort];
+  render();
+}
+function sortedMedia(list){
+  const l=[...list];
+  if(curSort==='newest') l.sort((a,b)=>b.timestamp-a.timestamp);
+  else if(curSort==='oldest') l.sort((a,b)=>a.timestamp-b.timestamp);
+  else if(curSort==='largest') l.sort((a,b)=>(b.size||0)-(a.size||0));
+  else if(curSort==='name') l.sort((a,b)=>a.name.localeCompare(b.name));
+  return l;
+}
+
+// ═══ Multi Select ═══
+function startLongPress(id){
+  longPressTimer=setTimeout(()=>{
+    if(!multiMode){multiMode=true;selectedIds.clear();}
+    toggleSelect(id);
+    if(navigator.vibrate) navigator.vibrate(40);
+  },500);
+}
+function cancelLongPress(){ clearTimeout(longPressTimer); }
+// ═══ GIF Preview Gerak ═══
+async function toggleGifPlay(e, id){
+  e.stopPropagation(); // jangan buka lightbox
+  const m = allMedia.find(x=>x.id===id);
+  if(!m || m.type!=='gif') return;
+
+  const card = e.target.closest('.photo-card');
+  if(!card) return;
+  const img = card.querySelector('.gif-thumb');
+  const badge = card.querySelector('.gif-badge');
+  if(!img || !badge) return;
+
+  const isPlaying = badge.classList.contains('playing');
+
+  if(isPlaying){
+    // Balik ke thumbnail statis
+    if(m.thumb) img.src = m.thumb;
+    badge.textContent = 'GIF';
+    badge.classList.remove('playing');
+  } else {
+    // Load blob asli dan tampilkan GIF bergerak
+    if(!m.blob) await getBlobLazy(m);
+    if(!m.blob) return;
+    const url = getUrl(m);
+    if(!url) return;
+    img.src = url;
+    badge.textContent = '▶ GIF';
+    badge.classList.add('playing');
+  }
+}
+
+function onCardClick(e,id,idx){
+  if(multiMode){ e.preventDefault(); toggleSelect(id); }
+  else { openLb(idx); }
+}
+function toggleSelect(id){
+  if(selectedIds.has(id)) selectedIds.delete(id);
+  else selectedIds.add(id);
+  if(selectedIds.size===0){ cancelMulti(); return; }
+  updateMultiBar();
+  // Update hanya kartu yang berubah state — tidak rebuild DOM, video tidak flicker
+  const card=document.querySelector(`.photo-card[data-id="${id}"]`);
+  if(card){
+    // CSS .photo-card.selected mengontrol ::after overlay dan .sel-check display
+    if(selectedIds.has(id)) card.classList.add('selected');
+    else card.classList.remove('selected');
+  } else {
+    render(); // fallback kalau kartu tidak ditemukan
+  }
+}
+function selectAll(){
+  const list=filtered();
+  if(selectedIds.size===list.length){
+    cancelMulti();
+    return;
+  }
+  list.forEach(m=>selectedIds.add(m.id));
+  multiMode=true;
+  updateMultiBar();
+  // Tambah class selected ke semua kartu yang ada di DOM saat ini
+  document.querySelectorAll('.photo-card').forEach(card=>{
+    if(selectedIds.has(card.dataset.id)) card.classList.add('selected');
+  });
+}
+function updateMultiBar(){
+  document.getElementById('multibarInfo').textContent=`${selectedIds.size} dipilih`;
+  document.getElementById('multibar').classList.add('show');
+}
+function cancelMulti(){
+  multiMode=false; selectedIds.clear();
+  document.getElementById('multibar').classList.remove('show');
+  // Hapus class selected dari semua kartu — CSS otomatis sembunyikan overlay & checkmark
+  document.querySelectorAll('.photo-card.selected').forEach(card=>{
+    card.classList.remove('selected');
+  });
+}
+function bulkMove(){
+  if(selectedIds.size===0) return;
+  const list=document.getElementById('moveAlbumList');
+  list.innerHTML=`<div class="pi" onclick="doBulkMove(null)"><span style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Tanpa Album</span></div>`
+    +allAlbums.map(a=>`<div class="pi" onclick="doBulkMove('${a.id}')"><span style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>${a.name}</span><span class="pi-c">${allMedia.filter(x=>x.albumId===a.id).length} file</span></div>`).join('');
+  document.getElementById('moveAlbumSheet').classList.remove('hidden');
+}
+async function doBulkMove(albumId){
+  const ids=[...selectedIds];
+  const affectedAlbums=new Set();
+  for(const id of ids){
+    const m=allMedia.find(x=>x.id===id);
+    if(!m) continue;
+    if(m.albumId) affectedAlbums.add(m.albumId);
+    m.albumId=albumId||null;
+    await mediaPut(m);
+    if(albumId) affectedAlbums.add(albumId);
+    // Pastikan blob ada di RAM dan hapus URL cache lama supaya di-generate ulang
+    if(!m.blob && m._opfs) await getBlobLazy(m);
+    urlCache.delete(id); // force regenerate Object URL setelah pindah
+  }
+  closeMoveAlbum();
+  // Reset multiselect tanpa render penuh — hapus class selected dari kartu
+  multiMode=false; selectedIds.clear();
+  document.getElementById('multibar').classList.remove('show');
+  document.querySelectorAll('.photo-card.selected').forEach(c=>c.classList.remove('selected'));
+  render(); updateStats();
+  requestAnimationFrame(()=> refreshAlbumThumbs([...affectedAlbums]));
+  const a=albumId?allAlbums.find(x=>x.id===albumId):null;
+  showToast(`${ids.length} file dipindah ke ${a?a.name:'Tanpa Album'}`);
+}
+async function deleteMulti(){
+  if(selectedIds.size===0) return;
+  const ids=[...selectedIds];
+  for(const id of ids){
+    await mediaDel(id);
+    urlCache.delete(id);
+    allMedia=allMedia.filter(x=>x.id!==id);
+  }
+  cancelMulti();
+  render(); updateStats();
+  showToast(`${ids.length} file dihapus`);
+}
+
+// ═══ Move Album (from Lightbox) ═══
+function openMoveLb(){
+  const m=filtered()[lbIdx]; if(!m) return;
+  // Store current media id before closing lightbox
+  const mediaId=m.id;
+  closeLb();
+  setTimeout(()=>{
+    const mCurrent=allMedia.find(x=>x.id===mediaId); if(!mCurrent) return;
+    const list=document.getElementById('moveAlbumList');
+    const curAlb=mCurrent.albumId;
+    list.innerHTML=`<div class="pi${!curAlb?' sel':''}" onclick="doMoveById('${mediaId}',null)"><span><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Tanpa Album</span><span class="pi-c">${!curAlb?'✓ Sekarang':''}</span></div>`
+      +allAlbums.map(a=>`<div class="pi${curAlb===a.id?' sel':''}" onclick="doMoveById('${mediaId}','${a.id}')"><span><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}</span><span class="pi-c">${curAlb===a.id?'✓ Sekarang':allMedia.filter(x=>x.albumId===a.id).length+' file'}</span></div>`).join('');
+    document.getElementById('moveAlbumSheet').classList.remove('hidden');
+  },50);
+}
+function _openMoveLbOLD(){
+  const m=filtered()[lbIdx]; if(!m) return;
+  const list=document.getElementById('moveAlbumList');
+  const curAlb=m.albumId;
+  list.innerHTML=`<div class="pi${!curAlb?' sel':''}" onclick="doMoveLb(null)"><span><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Tanpa Album</span><span class="pi-c">${!curAlb?'✓ Sekarang':''}</span></div>`
+    +allAlbums.map(a=>`<div class="pi${curAlb===a.id?' sel':''}" onclick="doMoveLb('${a.id}')"><span><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}</span><span class="pi-c">${curAlb===a.id?'✓ Sekarang':allMedia.filter(x=>x.albumId===a.id).length+' file'}</span></div>`).join('');
+  document.getElementById('moveAlbumSheet').classList.remove('hidden');
+}
+function closeMoveAlbum(){ document.getElementById('moveAlbumSheet').classList.add('hidden'); }
+async function doMoveLb(albumId){
+  const m=filtered()[lbIdx]; if(!m) return;
+  const orig=allMedia.find(x=>x.id===m.id); if(!orig) return;
+  orig.albumId=albumId||null;
+  await mediaPut(orig);
+  closeMoveAlbum();
+  showLb(); render();
+  const a=albumId?allAlbums.find(x=>x.id===albumId):null;
+  showToast('Dipindah ke '+(a?`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}`:'Tanpa Album'));
+}
+async function doMoveById(mediaId, albumId){
+  const orig=allMedia.find(x=>x.id===mediaId); if(!orig) return;
+  const oldAlbumId=orig.albumId;
+  orig.albumId=albumId||null;
+  await mediaPut(orig);
+  // Hapus URL cache supaya Object URL di-generate ulang setelah pindah
+  urlCache.delete(mediaId);
+  // Pastikan blob ada di RAM sebelum render
+  if(!orig.blob && orig._opfs) await getBlobLazy(orig);
+  closeMoveAlbum();
+  render(); updateStats();
+  // Update thumbnail album lama dan baru setelah render selesai
+  requestAnimationFrame(()=>{
+    const affected=[oldAlbumId, albumId].filter(Boolean);
+    refreshAlbumThumbs(affected);
+  });
+  const a=albumId?allAlbums.find(x=>x.id===albumId):null;
+  showToast('Dipindah ke '+(a?`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;display:inline-block;vertical-align:middle;margin-right:3px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> ${a.name}`:'Tanpa Album'));
+}
+
+// ═══ Settings ═══
+function openSettings(){
+  // Update storage mode badge
+  const badge = document.getElementById('storageModeBadge');
+  if(badge){
+    if(opfsMediaDir){
+      badge.innerHTML=`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#4caf7d;fill:none;stroke-width:1.5;flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Storage: <strong style="color:#4caf7d">OPFS (Aman)</strong> — file tersimpan di folder private</span>`;
+    } else {
+      badge.innerHTML=`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#e8c97a;fill:none;stroke-width:1.5;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Storage: <strong style="color:#e8c97a">IndexedDB</strong> — upgrade browser untuk OPFS</span>`;
+    }
+  }
+  document.getElementById('settingsSheet').classList.remove('hidden');
+  updateTLSettingsBadge();
+}
+function closeSettings(){document.getElementById('settingsSheet').classList.add('hidden');}
+
+function openChangePIN(){
+  closeSettings();
+  document.getElementById('oldPINInput').value='';
+  document.getElementById('newPINInput').value='';
+  document.getElementById('confirmPINInput').value='';
+  document.getElementById('changePINModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('oldPINInput').focus(),300);
+}
+function closeChangePIN(){document.getElementById('changePINModal').classList.add('hidden');}
+
+async function doChangePIN(){
+  const oldVal=document.getElementById('oldPINInput').value.trim();
+  const newVal=document.getElementById('newPINInput').value.trim();
+  const confVal=document.getElementById('confirmPINInput').value.trim();
+  // Verifikasi PIN lama dengan hash
+  const oldHashed = await hashPIN(oldVal);
+  if(oldHashed!==PIN){showToast('❌ PIN lama salah');return;}
+  if(newVal.length!==4||!/^\d{4}$/.test(newVal)){showToast('❌ PIN baru harus 4 angka');return;}
+  if(newVal!==confVal){showToast('❌ Konfirmasi PIN tidak cocok');return;}
+  const newHashed = await hashPIN(newVal);
+  PIN=newHashed;
+  try{ dbPut(SS,{key:'pin',value:newHashed}); }catch(e){}
+  closeChangePIN();
+  showToast('✅ PIN berhasil diubah');
+}
+
+// ═══ Backup & Restore ═══
+// ═══ Reset Data ═══
+function openResetModal(){ document.getElementById('resetModal').classList.remove('hidden'); }
+function closeResetModal(){ document.getElementById('resetModal').classList.add('hidden'); }
+
+async function doReset(){
+  closeResetModal();
+  try{
+    // Hapus semua file dari storage
+    await opfsClearAll();
+
+    // Hapus semua data dari IndexedDB
+    const existingMedia = await dbAll(MS);
+    for(const m of existingMedia){ await dbDel(MS, m.id); }
+    const existingAlbums = await dbAll(AS);
+    for(const a of existingAlbums){ await dbDel(AS, a.id); }
+    // Hapus settings kecuali PIN
+    try{
+      const sets = await dbAll(SS);
+      for(const s of sets){
+        if(s.key !== 'pin') await dbDel(SS, s.key);
+      }
+    }catch(e){}
+
+    // Reset state
+    allMedia = [];
+    allAlbums = [];
+    // Revoke semua Blob URL sebelum clear cache
+    urlCache.forEach(url=>{ try{ URL.revokeObjectURL(url); }catch(e){} });
+    urlCache.clear();
+    thumbCache.clear();
+    selectedIds.clear();
+    curAlbum = null;
+    curFilter = 'all';
+
+    render();
+    updateStats();
+    showToast('✅ Semua data berhasil dihapus');
+  }catch(e){
+    console.error('Reset error:', e);
+    showToast('❌ Reset gagal: ' + e.message);
+  }
+}
+
+async function doBackup(){
+  closeSettings();
+  if(allMedia.length===0){showToast('Tidak ada data untuk dibackup');return;}
+
+  // Show progress modal
+  const modal=document.getElementById('backupModal');
+  const bar=document.getElementById('backupBar');
+  const msg=document.getElementById('backupMsg');
+  const title=document.getElementById('backupTitle');
+  modal.classList.remove('hidden');
+  title.textContent='Membuat Backup...';
+
+  try{
+    // We'll create a ZIP-like structure using a custom format
+    // Format: vault-backup (custom binary with index + blobs)
+    // Simpler: use a JSON manifest + concatenated blob data encoded as base64 chunks
+    // Actually use JSZip-style: encode everything into a single downloadable blob
+
+    const metadata={
+      version:1,
+      created:new Date().toISOString(),
+      albums:allAlbums,
+      media:[]
+    };
+
+    // Helper: tulis uint32 little-endian sebagai ArrayBuffer kecil
+    function u32buf(n){ const b=new ArrayBuffer(4); new DataView(b).setUint32(0,n,true); return b; }
+
+    // Load blob secara parallel per batch — jauh lebih cepat dari sequential
+    const BATCH=5; // 5 file parallel, aman untuk mobile OPFS
+    const blobParts=[];
+    let skipped=0;
+    let loaded=0;
+
+    for(let i=0;i<allMedia.length;i+=BATCH){
+      const batch=allMedia.slice(i,i+BATCH);
+
+      // Load semua blob di batch ini secara parallel
+      await Promise.all(batch.map(m=> m.blob ? Promise.resolve() : getBlobLazy(m)));
+
+      // Kemas hasil batch — urutan dijaga karena kita iterasi batch secara sequential
+      for(const m of batch){
+        loaded++;
+        bar.style.width=((loaded/allMedia.length)*85)+'%';
+        msg.textContent=`Mengemas ${loaded}/${allMedia.length}...`;
+
+        if(!m.blob){ skipped++; continue; }
+
+        const idBytes=new TextEncoder().encode(m.id);
+        const fileBlob=m.blob;
+
+        const meta={
+          id:m.id, name:m.name, type:m.type, mime:m.mime,
+          timestamp:m.timestamp, date:m.date, fav:m.fav,
+          size:m.size, albumId:m.albumId, thumb:m.thumb||null
+        };
+        metadata.media.push(meta);
+
+        blobParts.push(u32buf(idBytes.length));
+        blobParts.push(idBytes);
+        blobParts.push(u32buf(fileBlob.size));
+        blobParts.push(fileBlob);
+      }
+
+      await new Promise(r=>setTimeout(r,0)); // yield ke UI setiap batch selesai
+    }
+
+    bar.style.width='90%';
+    msg.textContent='Menyusun file backup...';
+    await new Promise(r=>setTimeout(r,0));
+
+    // Tulis manifest di awal
+    const manifestBytes=new TextEncoder().encode(JSON.stringify(metadata));
+    const finalParts=[u32buf(manifestBytes.length), manifestBytes, ...blobParts];
+
+    // Buat Blob akhir — browser menyusun tanpa copy semua data ke RAM
+    const blob=new Blob(finalParts,{type:'application/octet-stream'});
+
+    bar.style.width='95%';
+    msg.textContent='Menyimpan ke perangkat...';
+    await new Promise(r=>setTimeout(r,0));
+
+    const d=new Date();
+    const fname=`vault-backup-${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.vault`;
+
+    // Android WebView/PWA: coba Web Share API dulu (paling reliable untuk simpan file)
+    // Fallback ke <a download> kalau Share API tidak tersedia
+    let saved=false;
+    if(navigator.canShare && navigator.canShare({files:[new File([blob],fname,{type:'application/octet-stream'})]})){
+      try{
+        await navigator.share({
+          files:[new File([blob],fname,{type:'application/octet-stream'})],
+          title:'Vault Backup'
+        });
+        saved=true;
+      }catch(e){
+        // User cancel share atau error — fallback ke download
+        if(e.name!=='AbortError') console.warn('Share gagal, fallback ke download:',e);
+      }
+    }
+
+    if(!saved){
+      // Fallback: <a download> — harus di-append ke DOM supaya work di Android
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=fname;
+      a.style.display='none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); document.body.removeChild(a); },3000);
+    }
+
+    bar.style.width='100%';
+    title.textContent='Backup Selesai!';
+    const skippedNote=skipped>0?` (${skipped} file dilewati)`:'';
+    msg.textContent=`${metadata.media.length} file, ${allAlbums.length} album berhasil dibackup.${skippedNote}`;
+    setTimeout(()=>modal.classList.add('hidden'),2500);
+
+  }catch(e){
+    console.error('Backup error:',e);
+    modal.classList.add('hidden');
+    showToast('❌ Backup gagal: '+e.message);
+  }
+}
+
+async function doRestore(file){
+  if(!file) return;
+  document.getElementById('restoreInput').value='';
+  closeSettings();
+
+  const modal=document.getElementById('backupModal');
+  const bar=document.getElementById('backupBar');
+  const msg=document.getElementById('backupMsg');
+  const title=document.getElementById('backupTitle');
+  modal.classList.remove('hidden');
+  bar.style.width='0%';
+  title.textContent='Memulihkan Backup...';
+  msg.textContent='Membaca file backup...';
+
+  try{
+    // ── FASE 1: Parse manifest dari header file (tanpa load seluruh file) ──
+    const manifestLenBuf=await file.slice(0,4).arrayBuffer();
+    const manifestLen=new DataView(manifestLenBuf).getUint32(0,true);
+    if(manifestLen>10*1024*1024) throw new Error('File backup tidak valid (manifest terlalu besar)');
+
+    const manifestBuf=await file.slice(4,4+manifestLen).arrayBuffer();
+    const metadata=JSON.parse(new TextDecoder().decode(manifestBuf));
+    if(!metadata.version||!metadata.media) throw new Error('File backup tidak valid');
+    if(!metadata.albums) metadata.albums=[];
+
+    // Buat lookup map meta by id — O(1) akses, lebih cepat dari .find() per file
+    const metaById=new Map(metadata.media.map(m=>[m.id,m]));
+
+    bar.style.width='10%';
+    msg.textContent=`Ditemukan ${metadata.media.length} file, ${metadata.albums.length} album`;
+    await new Promise(r=>setTimeout(r,300));
+
+    // ── FASE 2: Parse index semua blob dari file (hanya catat offset+panjang, tidak baca datanya) ──
+    // Ini sangat cepat karena File.slice() tidak copy data — hanya referensi
+    const blobMap=new Map();
+    let offset=4+manifestLen;
+    const fileSize=file.size;
+    let i=0;
+
+    while(offset<fileSize){
+      const hdrBuf=await file.slice(offset,offset+4).arrayBuffer();
+      const idLen=new DataView(hdrBuf).getUint32(0,true);
+      if(idLen===0||idLen>500) break;
+      offset+=4;
+
+      const idBuf=await file.slice(offset,offset+idLen).arrayBuffer();
+      const id=new TextDecoder().decode(idBuf);
+      offset+=idLen;
+
+      const dataHdrBuf=await file.slice(offset,offset+4).arrayBuffer();
+      const dataLen=new DataView(dataHdrBuf).getUint32(0,true);
+      offset+=4;
+      if(dataLen===0||offset+dataLen>fileSize) break;
+
+      // File.slice() = zero-copy referensi ke data asli — tidak ada RAM usage di sini
+      const mime=(metaById.get(id)||{mime:'application/octet-stream'}).mime;
+      blobMap.set(id, new Blob([file.slice(offset,offset+dataLen)],{type:mime}));
+      offset+=dataLen;
+      i++;
+
+      if(i%10===0){
+        bar.style.width=(10+((i/metadata.media.length)*20))+'%';
+        msg.textContent=`Parsing ${i}/${metadata.media.length}...`;
+        await new Promise(r=>setTimeout(r,0));
+      }
+    }
+
+    bar.style.width='32%';
+    msg.textContent='Membersihkan data lama...';
+    await new Promise(r=>setTimeout(r,0));
+
+    // ── FASE 3: Clear data lama ──
+    await new Promise((res,rej)=>{
+      const tx=db.transaction([MS,AS],'readwrite');
+      tx.objectStore(MS).clear();
+      tx.objectStore(AS).clear();
+      tx.oncomplete=res;
+      tx.onerror=()=>rej(tx.error);
+      tx.onabort=()=>rej(new Error('Transaction aborted'));
+    });
+
+    // Hapus semua file storage lama
+    await opfsClearAll();
+
+    urlCache.forEach(url=>{ try{ URL.revokeObjectURL(url); }catch(e){} });
+    urlCache.clear();
+
+    // ── FASE 4: Simpan album + metadata IndexedDB sekaligus ──
+    bar.style.width='45%';
+    msg.textContent='Menyimpan metadata...';
+    await new Promise(r=>setTimeout(r,0));
+
+    const mediaItems=[];
+    for(const meta of metadata.media){
+      const blob=blobMap.get(meta.id);
+      if(!blob) continue;
+      mediaItems.push({...meta, blob, _opfs:!!opfsMediaDir, thumb:meta.thumb||null});
+    }
+
+    await new Promise((res,rej)=>{
+      const tx=db.transaction([MS,AS],'readwrite');
+      if(metadata.albums.length>0){
+        const as=tx.objectStore(AS);
+        metadata.albums.forEach(a=>as.put(a));
+      }
+      const ms=tx.objectStore(MS);
+      // Simpan semua metadata sekaligus dalam SATU transaction — jauh lebih cepat
+      mediaItems.forEach(item=>ms.put({...item, blob:null}));
+      tx.oncomplete=res;
+      tx.onerror=()=>rej(tx.error);
+      tx.onabort=()=>rej(new Error('Metadata transaction aborted'));
+    });
+
+    // ── FASE 5: Tulis blob ke OPFS secara parallel (batch 8) ──
+    bar.style.width='55%';
+    const WBATCH=8; // 8 file parallel write — OPFS aman untuk file berbeda
+    let j=0;
+    const opfsUpdates=[]; // kumpulkan id yang berhasil, update DB sekali di akhir
+
+    if(opfsMediaDir){
+      for(let wi=0;wi<mediaItems.length;wi+=WBATCH){
+        const wbatch=mediaItems.slice(wi,wi+WBATCH);
+        const results=await Promise.all(wbatch.map(item=>opfsSave(item.id,item.blob)));
+        results.forEach((ok,idx)=>{ if(ok) opfsUpdates.push(wbatch[idx].id); });
+        j+=wbatch.length;
+        bar.style.width=(55+((j/mediaItems.length)*40))+'%';
+        msg.textContent=`Menyimpan file ${j}/${mediaItems.length}...`;
+        await new Promise(r=>setTimeout(r,0));
+      }
+
+      // Satu transaction untuk update semua _opfs:true sekaligus
+      if(opfsUpdates.length>0){
+        const idSet=new Set(opfsUpdates);
+        await new Promise((res,rej)=>{
+          const tx=db.transaction(MS,'readwrite');
+          const store=tx.objectStore(MS);
+          mediaItems.filter(m=>idSet.has(m.id)).forEach(item=>store.put({...item,blob:null,_opfs:true}));
+          tx.oncomplete=res; tx.onerror=()=>rej(tx.error);
+        });
+      }
+    } else {
+      // Fallback: simpan blob langsung di IndexedDB (parallel juga)
+      for(let wi=0;wi<mediaItems.length;wi+=WBATCH){
+        const wbatch=mediaItems.slice(wi,wi+WBATCH);
+        await new Promise((res,rej)=>{
+          const tx=db.transaction(MS,'readwrite');
+          const store=tx.objectStore(MS);
+          wbatch.forEach(item=>store.put({...item}));
+          tx.oncomplete=res; tx.onerror=()=>rej(tx.error);
+        });
+        j+=wbatch.length;
+        bar.style.width=(55+((j/mediaItems.length)*40))+'%';
+        msg.textContent=`Menyimpan file ${j}/${mediaItems.length}...`;
+        await new Promise(r=>setTimeout(r,0));
+      }
+    }
+
+    bar.style.width='100%';
+    title.textContent='Pemulihan Selesai!';
+    msg.textContent=`${j} file & ${metadata.albums.length} album dipulihkan. Memuat ulang...`;
+    setTimeout(()=>{ window.location.reload(); }, 2000);
+
+  }catch(e){
+    console.error('Restore error:',e);
+    modal.classList.add('hidden');
+    showToast('❌ Restore gagal: '+e.message);
+  }
+}
+
+// ═══ Block browser context menu on media ═══
+['gallery','lbW'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el){
+    el.addEventListener('contextmenu',e=>e.preventDefault(),{capture:true});
+    el.addEventListener('touchstart',e=>{
+      if(e.target.matches('img,video')) e.preventDefault();
+    },{passive:false,capture:true});
+  }
+});
+
+// ═══ Android Back Button ═══
+function pushState(state){
+  history.pushState(state, '');
+}
+
+window.addEventListener('popstate', e => {
+
+  // 1. Lightbox terbuka → tutup lightbox
+  if(!document.getElementById('lightbox').classList.contains('hidden')){
+    closeLb();
+    history.replaceState('gallery', '');
+    return;
+  }
+
+  // 2. Ada sheet/modal terbuka → tutup sheet/modal
+  const sheets = [
+    'uploadSheet','pickerSheet','aas','settingsSheet',
+    'moveAlbumSheet','confirmDelSheet','backupModal','changePINModal'
+  ];
+  for(const id of sheets){
+    const el=document.getElementById(id);
+    if(el && !el.classList.contains('hidden')){
+      el.classList.add('hidden');
+      history.replaceState('gallery', '');
+      return;
+    }
+  }
+  const modals = ['newAlbumMod','renameMod','delMod'];
+  for(const id of modals){
+    const el=document.getElementById(id);
+    if(el && !el.classList.contains('hidden')){
+      el.classList.add('hidden');
+      history.replaceState('gallery', '');
+      return;
+    }
+  }
+
+  // 3. Multiselect aktif → cancel
+  if(multiMode){
+    cancelMulti();
+    history.replaceState('gallery', '');
+    return;
+  }
+
+  // 4. Di dalam album → balik ke home
+  if(curAlbum !== null){
+    goHome();
+    history.replaceState('gallery', '');
+    return;
+  }
+
+  // 5. Di filter selain 'all' → reset ke semua
+  if(curFilter !== 'all'){
+    goHome();
+    history.replaceState('gallery', '');
+    return;
+  }
+
+  // 6. Di app screen → balik ke lock screen
+  if(!document.getElementById('appScreen').classList.contains('hidden')){
+    lockApp();
+    history.replaceState('lock', '');
+    return;
+  }
+
+  // 7. Sudah di lock screen → tahan, jangan keluar dari app
+  history.pushState('lock', '');
+});
+
+// Push initial state saat app dimuat
+window.addEventListener('load', () => {
+  history.replaceState('lock', '');
+});
+// ═══════════════════════════════════════════════
+// TIME-LOCK SYSTEM
+// ═══════════════════════════════════════════════
+let tlUnlockTime = null; // timestamp ms kapan vault bisa dibuka
+let tlInterval = null;
+let tlStartTime = null; // kapan lock mulai (untuk progress bar)
+
+// Load time-lock dari IndexedDB (+ localStorage sebagai fallback cepat)
+async function loadTL(){
+  // Cek localStorage dulu (lebih cepat, tersedia sebelum DB siap)
+  try{
+    const lsUnlock = localStorage.getItem('tl_unlock');
+    const lsStart  = localStorage.getItem('tl_start');
+    if(lsUnlock && lsStart){
+      tlUnlockTime = parseInt(lsUnlock);
+      tlStartTime  = parseInt(lsStart);
+    }
+  }catch(e){}
+  // Konfirmasi dari IndexedDB (lebih reliable)
+  try{
+    if(!db.objectStoreNames.contains(SS)) return;
+    const r = await new Promise((res)=>{
+      const req = txs(SS).get('timelock');
+      req.onsuccess = () => res(req.result);
+      req.onerror = () => res(null);
+    });
+    if(r && r.value){
+      const data = JSON.parse(r.value);
+      tlUnlockTime = data.unlockAt;
+      tlStartTime = data.startAt;
+      // Sync ke localStorage
+      localStorage.setItem('tl_unlock', tlUnlockTime);
+      localStorage.setItem('tl_start', tlStartTime);
+    }
+  }catch(e){ console.log('TL load error:',e); }
+}
+
+async function saveTLToDB(){
+  try{
+    await dbPut(SS, {key:'timelock', value: JSON.stringify({unlockAt: tlUnlockTime, startAt: tlStartTime})});
+    // Backup ke localStorage supaya tidak hilang saat refresh
+    localStorage.setItem('tl_unlock', tlUnlockTime);
+    localStorage.setItem('tl_start', tlStartTime);
+  }catch(e){}
+}
+
+async function removeTLFromDB(){
+  try{
+    await dbDel(SS, 'timelock');
+    localStorage.removeItem('tl_unlock');
+    localStorage.removeItem('tl_start');
+  }catch(e){}
+}
+
+// Cek apakah time-lock masih aktif
+function isTLActive(){
+  return tlUnlockTime && Date.now() < tlUnlockTime;
+}
+
+// Format timestamp jadi string cantik
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) +
+    ', ' + String(d.getHours()).padStart(2,'0') + ':' +
+    String(d.getMinutes()).padStart(2,'0') + ':' +
+    String(d.getSeconds()).padStart(2,'0');
+}
+
+// Update countdown display setiap detik
+function updateTLCountdown(){
+  if(!tlUnlockTime) return;
+  const now = Date.now();
+  const diff = tlUnlockTime - now;
+
+  if(diff <= 0){
+    // Waktu habis! Sembunyikan overlay, aktifkan numpad
+    clearInterval(tlInterval);
+    tlInterval = null;
+    hideTLOverlay();
+    showToast('🔓 Vault sudah bisa dibuka!');
+    // Getar notifikasi
+    if(navigator.vibrate) navigator.vibrate([100,50,100,50,200]);
+    return;
+  }
+
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('tlD').textContent = String(days).padStart(2,'0');
+  document.getElementById('tlH').textContent = String(hours).padStart(2,'0');
+  document.getElementById('tlM').textContent = String(mins).padStart(2,'0');
+  document.getElementById('tlS').textContent = String(secs).padStart(2,'0');
+
+  // Progress bar: berapa persen sudah lewat
+  if(tlStartTime){
+    const total = tlUnlockTime - tlStartTime;
+    const passed = now - tlStartTime;
+    const pct = Math.min(100, (passed / total) * 100);
+    document.getElementById('tlProgress').style.width = pct + '%';
+  }
+
+  // Tampilkan tanggal unlock
+  document.getElementById('tlUnlockDate').textContent = fmtDate(tlUnlockTime);
+}
+
+function showTLOverlay(){
+  const overlay = document.getElementById('timeLockOverlay');
+  overlay.classList.remove('hidden');
+  // Nonaktifkan numpad visually
+  document.querySelectorAll('.num-btn').forEach(b=>{
+    b.style.opacity='0.2';
+    b.style.pointerEvents='none';
+  });
+  // Update langsung
+  updateTLCountdown();
+  if(!tlInterval) tlInterval = setInterval(updateTLCountdown, 1000);
+}
+
+function hideTLOverlay(){
+  document.getElementById('timeLockOverlay').classList.add('hidden');
+  // Aktifkan kembali numpad
+  document.querySelectorAll('.num-btn').forEach(b=>{
+    b.style.opacity='';
+    b.style.pointerEvents='';
+  });
+}
+
+// Panggil ini saat app pertama dibuka
+async function checkAndApplyTL(){
+  await loadTL();
+  if(isTLActive()){
+    showTLOverlay();
+    // Update badge di settings
+    updateTLSettingsBadge();
+  }
+}
+
+function updateTLSettingsBadge(){
+  const badge = document.getElementById('tlSettingsBadge');
+  if(!badge) return;
+  if(isTLActive()){
+    badge.style.display='inline';
+  } else {
+    badge.style.display='none';
+    // Hapus dari DB kalau sudah expire
+    if(tlUnlockTime && Date.now() >= tlUnlockTime){
+      tlUnlockTime = null;
+      tlStartTime = null;
+      removeTLFromDB();
+    }
+  }
+}
+
+// ── Time-Lock Modal ──
+function openTLModal(){
+  // Tampilkan status kunci aktif
+  const statusEl = document.getElementById('tlCurrentStatus');
+  if(isTLActive()){
+    statusEl.style.display='flex';
+    document.getElementById('tlCurrentDate').textContent = fmtDate(tlUnlockTime);
+  } else {
+    statusEl.style.display='none';
+  }
+  document.getElementById('timeLockModal').classList.remove('hidden');
+  // Init drum picker (sedikit delay agar DOM rendered)
+  setTimeout(cpInitAll, 50);
+}
+
+function closeTLModal(){
+  document.getElementById('timeLockModal').classList.add('hidden');
+}
+
+// ═══════════════════════════════════════════════
+// CUSTOM DRUM PICKER
+// ═══════════════════════════════════════════════
+const MONTHS_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+// State picker
+const cpState = { day:1, month:1, year:2026, hour:0, min:0, sec:0 };
+
+// Konfigurasi tiap drum
+const cpDrums = {
+  cpDay:   { key:'day',   getItems: ()=>{ const max=new Date(cpState.year,cpState.month,0).getDate(); return Array.from({length:max},(_,i)=>String(i+1).padStart(2,'0')); }, wrap:false },
+  cpMonth: { key:'month', getItems: ()=>MONTHS_ID.map((m,i)=>m), wrap:false },
+  cpYear:  { key:'year',  getItems: ()=>{ const y=new Date().getFullYear(); return Array.from({length:6},(_,i)=>String(y+i)); }, wrap:false },
+  cpHour:  { key:'hour',  getItems: ()=>Array.from({length:24},(_,i)=>String(i).padStart(2,'0')), wrap:true },
+  cpMin:   { key:'min',   getItems: ()=>Array.from({length:60},(_,i)=>String(i).padStart(2,'0')), wrap:true },
+  cpSec:   { key:'sec',   getItems: ()=>Array.from({length:60},(_,i)=>String(i).padStart(2,'0')), wrap:true },
+};
+
+function cpRenderDrum(drumId){
+  const cfg = cpDrums[drumId];
+  const items = cfg.getItems();
+  const drum = document.getElementById(drumId+'Drum');
+  if(!drum) return;
+  drum.innerHTML = items.map((v,i)=>`<div class="cp-item" data-idx="${i}">${v}</div>`).join('');
+  // cari index nilai saat ini — day value adalah 1-31 (bukan index!)
+  let idx = 0;
+  if(cfg.key==='day')   idx = Math.min(cpState.day - 1, items.length-1);
+  else if(cfg.key==='month') idx = cpState.month - 1;
+  else if(cfg.key==='year'){
+    idx = items.indexOf(String(cpState.year));
+    if(idx < 0) idx = 0;
+  } else {
+    // hour/min/sec: value == index
+    idx = Math.min(cpState[cfg.key], items.length-1);
+  }
+  idx = Math.max(0, idx);
+  cpScrollTo(drumId, idx, false);
+}
+
+function cpScrollTo(drumId, idx, animate){
+  const cfg = cpDrums[drumId];
+  const items = cfg.getItems();
+  idx = Math.max(0, Math.min(idx, items.length-1));
+  const drum = document.getElementById(drumId+'Drum');
+  const wrap = document.getElementById(drumId);
+  if(!drum||!wrap) return;
+  drum.style.transition = animate ? 'transform .2s cubic-bezier(.25,.1,.25,1)' : 'none';
+  const offset = 36 - idx * 36;
+  drum.style.transform = `translateY(${offset}px)`;
+  drum.querySelectorAll('.cp-item').forEach((el,i)=>el.classList.toggle('active', i===idx));
+  // update state — day disimpan sebagai 1-31
+  if(cfg.key==='day')   cpState.day = idx + 1;
+  else if(cfg.key==='month') cpState.month = idx + 1;
+  else if(cfg.key==='year')  cpState.year = parseInt(items[idx]);
+  else cpState[cfg.key] = idx;
+  // clamp day kalau bulan/tahun berubah
+  if(cfg.key==='month'||cfg.key==='year'){
+    const maxDay = new Date(cpState.year, cpState.month, 0).getDate();
+    if(cpState.day > maxDay) cpState.day = maxDay;
+    cpRenderDrum('cpDay');
+  }
+  cpUpdatePreview();
+}
+
+function cpCurrentIdx(drumId){
+  const cfg = cpDrums[drumId];
+  const items = cfg.getItems();
+  if(cfg.key==='day')   return Math.min(cpState.day - 1, items.length-1);
+  if(cfg.key==='month') return cpState.month - 1;
+  if(cfg.key==='year')  return Math.max(0, items.indexOf(String(cpState.year)));
+  return Math.min(cpState[cfg.key], items.length-1);
+}
+
+function cpUpdatePreview(){
+  const d = new Date(cpState.year, cpState.month-1, cpState.day, cpState.hour, cpState.min, cpState.sec);
+  const el = document.getElementById('cpPreview');
+  if(!el) return;
+  el.textContent = '🔒 ' + d.toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short',year:'numeric'}) +
+    '  ' + String(cpState.hour).padStart(2,'0') + ':' +
+    String(cpState.min).padStart(2,'0') + ':' +
+    String(cpState.sec).padStart(2,'0');
+  el.classList.add('show');
+}
+
+// Touch/drag handler untuk semua drum
+function cpInitDrag(drumId){
+  const wrap = document.getElementById(drumId);
+  if(!wrap) return;
+  let startY=0, startIdx=0, dragging=false;
+
+  const onStart = e => {
+    dragging = true;
+    startY = (e.touches?e.touches[0].clientY:e.clientY);
+    startIdx = cpCurrentIdx(drumId);
+    e.preventDefault();
+  };
+  const onMove = e => {
+    if(!dragging) return;
+    const y = (e.touches?e.touches[0].clientY:e.clientY);
+    const delta = Math.round((startY - y) / 36);
+    const items = cpDrums[drumId].getItems();
+    const newIdx = Math.max(0, Math.min(startIdx + delta, items.length-1));
+    cpScrollTo(drumId, newIdx, false);
+    e.preventDefault();
+  };
+  const onEnd = e => { dragging = false; };
+
+  wrap.addEventListener('touchstart', onStart, {passive:false});
+  wrap.addEventListener('touchmove',  onMove,  {passive:false});
+  wrap.addEventListener('touchend',   onEnd);
+  wrap.addEventListener('mousedown',  onStart);
+  window.addEventListener('mousemove', e=>{ if(dragging) onMove(e); });
+  window.addEventListener('mouseup',   onEnd);
+
+  // Wheel support
+  wrap.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const items = cpDrums[drumId].getItems();
+    const cur = cpCurrentIdx(drumId);
+    const newIdx = Math.max(0, Math.min(cur + (e.deltaY>0?1:-1), items.length-1));
+    cpScrollTo(drumId, newIdx, true);
+  }, {passive:false});
+
+  // Tap on item
+  wrap.addEventListener('click', e=>{
+    const item = e.target.closest('.cp-item');
+    if(!item) return;
+    cpScrollTo(drumId, parseInt(item.dataset.idx), true);
+  });
+}
+
+function cpInitAll(){
+  // Set default ke sekarang + 1 jam
+  const def = new Date(Date.now() + 3600000);
+  cpState.day   = def.getDate();
+  cpState.month = def.getMonth()+1;
+  cpState.year  = def.getFullYear();
+  cpState.hour  = def.getHours();
+  cpState.min   = def.getMinutes();
+  cpState.sec   = def.getSeconds();
+  Object.keys(cpDrums).forEach(id=>{ cpRenderDrum(id); cpInitDrag(id); });
+  cpUpdatePreview();
+}
+
+function cpGetTimestamp(){
+  return new Date(cpState.year, cpState.month-1, cpState.day, cpState.hour, cpState.min, cpState.sec).getTime();
+}
+
+// ── Preset — update cpState ──
+function setPreset(amount, unit, ev){
+  const target = new Date();
+  if(unit==='hour')  target.setHours(target.getHours()+amount);
+  else if(unit==='day')   target.setDate(target.getDate()+amount);
+  else if(unit==='week')  target.setDate(target.getDate()+amount*7);
+  else if(unit==='month') target.setMonth(target.getMonth()+amount);
+
+  cpState.day   = target.getDate();
+  cpState.month = target.getMonth()+1;
+  cpState.year  = target.getFullYear();
+  cpState.hour  = target.getHours();
+  cpState.min   = target.getMinutes();
+  cpState.sec   = target.getSeconds();
+  Object.keys(cpDrums).forEach(id=>cpRenderDrum(id));
+  cpUpdatePreview();
+
+  // Visual feedback
+  const btn = ev?.target||ev;
+  if(btn){ btn.style.borderColor='var(--gold)';btn.style.color='var(--gold)';btn.style.background='var(--gold-dim)';
+    setTimeout(()=>{btn.style.borderColor='';btn.style.color='';btn.style.background='';},600); }
+}
+
+async function saveTL(){
+  const target = cpGetTimestamp();
+  if(target <= Date.now()){ showToast('⚠️ Waktu harus di masa depan'); return; }
+
+  tlUnlockTime = target;
+  tlStartTime = Date.now();
+  await saveTLToDB();
+
+  closeTLModal();
+  showToast('🔒 Time-Lock aktif! Terkunci sampai ' + fmtDate(target));
+  showTLOverlay();
+  updateTLSettingsBadge();
+  setTimeout(lockApp, 1200);
+}
+
+async function removeTL(){
+  tlUnlockTime = null;
+  tlStartTime = null;
+  clearInterval(tlInterval);
+  tlInterval = null;
+  await removeTLFromDB();
+  hideTLOverlay();
+  closeTLModal();
+  updateTLSettingsBadge();
+  showToast('🔓 Time-Lock dihapus');
+}
+
+// ═══ Rotate ke Landscape — overlay terpisah ═══
+let isLandscapeMode = false;
+let _lsVidSrc = '';
+
+function masukLandscape() {
+  const srcVid = document.getElementById('lbVid');
+  _lsVidSrc = srcVid.src;
+  const ct = srcVid.currentTime;
+
+  // Buat overlay landscape
+  const ov = document.createElement('div');
+  ov.id = 'lsOverlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;';
+
+  // Tombol tutup
+  const closeBtn = document.createElement('button');
+  closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.3);border-radius:8px;color:white;padding:8px 14px;font-size:.7rem;letter-spacing:.1em;font-family:monospace;z-index:2;cursor:pointer;';
+  closeBtn.textContent = '✕ PORTRAIT';
+  closeBtn.onclick = keluarLandscape;
+
+  // Video landscape
+  const vid = document.createElement('video');
+  vid.src = _lsVidSrc;
+  vid.currentTime = ct;
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;';
+  vid.setAttribute('playsinline', '');
+  vid.controls = true;
+  vid.autoplay = true;
+
+  ov.appendChild(vid);
+  ov.appendChild(closeBtn);
+  document.body.appendChild(ov);
+
+  // Pause video asli
+  srcVid.pause();
+  isLandscapeMode = true;
+
+  // Update tombol rotate
+  const btn = document.getElementById('lbRotateBtn');
+  btn.style.borderColor = 'var(--gold)';
+  btn.style.color = 'var(--gold)';
+}
+
+function keluarLandscape() {
+  const ov = document.getElementById('lsOverlay');
+  if (!ov) return;
+  // Sync waktu kembali ke video asli
+  const lsVid = ov.querySelector('video');
+  const ct = lsVid ? lsVid.currentTime : 0;
+  lsVid && lsVid.pause();
+  ov.remove();
+
+  const srcVid = document.getElementById('lbVid');
+  if (srcVid.src) {
+    srcVid.currentTime = ct;
+    srcVid.play().catch(()=>{});
+  }
+
+  isLandscapeMode = false;
+  const btn = document.getElementById('lbRotateBtn');
+  if (btn) { btn.style.borderColor = ''; btn.style.color = ''; }
+}
+
+function resetLandscapeIfNeeded() {
+  if (isLandscapeMode) keluarLandscape();
+}
+
+async function init(){
+  db=await openDB();
+  // Init OPFS
+  const opfsOk = await initOPFS();
+  // Load saved PIN from DB
+  try{
+    if(db.objectStoreNames.contains(SS)){
+      const saved=await new Promise((res,rej)=>{
+        const r=txs(SS).get('pin');
+        r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);
+      });
+      if(saved&&saved.value){
+        // Backward compat: kalau PIN masih plaintext (4 digit angka), upgrade ke hash
+        if(/^\d{4}$/.test(saved.value)){
+          const hashed = await hashPIN(saved.value);
+          PIN = hashed;
+          dbPut(SS,{key:'pin',value:hashed}).catch(()=>{});
+        } else {
+          PIN = saved.value; // sudah berupa hash
+        }
+      } else {
+        // PIN default — simpan sebagai hash
+        PIN = await hashPIN('8045');
+        dbPut(SS,{key:'pin',value:PIN}).catch(()=>{});
+      }
+    }
+  }catch(e){ console.log('PIN load error:',e); }
+  // Cek time-lock
+  await checkAndApplyTL();
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  }
+}
+init();
+</script>
+</body>
+</html>
