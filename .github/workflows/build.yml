@@ -36,53 +36,17 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Sync Capacitor (register plugins)
+      - name: Sync Capacitor
         run: npx cap sync android
 
-      - name: Patch MainActivity — register Filesystem plugin
-        run: |
-          MAIN=$(find android -name "MainActivity.java" -o -name "MainActivity.kt" | head -1)
-          echo "Found MainActivity: $MAIN"
-          if [[ "$MAIN" == *.kt ]]; then
-            cat > "$MAIN" << 'KOTLIN'
-package com.kamu.id
-
-import android.os.Bundle
-import com.getcapacitor.BridgeActivity
-import com.capacitorjs.plugins.filesystem.FilesystemPlugin
-
-class MainActivity : BridgeActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        registerPlugin(FilesystemPlugin::class.java)
-        super.onCreate(savedInstanceState)
-    }
-}
-KOTLIN
-          else
-            cat > "$MAIN" << 'JAVA'
-package com.kamu.id;
-
-import android.os.Bundle;
-import com.getcapacitor.BridgeActivity;
-import com.capacitorjs.plugins.filesystem.FilesystemPlugin;
-
-public class MainActivity extends BridgeActivity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        registerPlugin(FilesystemPlugin.class);
-        super.onCreate(savedInstanceState);
-    }
-}
-JAVA
-          fi
+      - name: Register Filesystem plugin
+        run: python3 patch_main.py
 
       - name: Beri izin gradlew
         run: chmod +x android/gradlew
 
-      - name: Build APK (debug)
-        run: |
-          cd android
-          ./gradlew assembleDebug
+      - name: Build APK
+        run: cd android && ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
