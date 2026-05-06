@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # bisa trigger manual dari GitHub
+  workflow_dispatch:
 
 jobs:
   build:
@@ -36,8 +36,45 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Sync Capacitor
+      - name: Sync Capacitor (register plugins)
         run: npx cap sync android
+
+      - name: Patch MainActivity — register Filesystem plugin
+        run: |
+          MAIN=$(find android -name "MainActivity.java" -o -name "MainActivity.kt" | head -1)
+          echo "Found MainActivity: $MAIN"
+          if [[ "$MAIN" == *.kt ]]; then
+            cat > "$MAIN" << 'KOTLIN'
+package com.kamu.id
+
+import android.os.Bundle
+import com.getcapacitor.BridgeActivity
+import com.capacitorjs.plugins.filesystem.FilesystemPlugin
+
+class MainActivity : BridgeActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        registerPlugin(FilesystemPlugin::class.java)
+        super.onCreate(savedInstanceState)
+    }
+}
+KOTLIN
+          else
+            cat > "$MAIN" << 'JAVA'
+package com.kamu.id;
+
+import android.os.Bundle;
+import com.getcapacitor.BridgeActivity;
+import com.capacitorjs.plugins.filesystem.FilesystemPlugin;
+
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(FilesystemPlugin.class);
+        super.onCreate(savedInstanceState);
+    }
+}
+JAVA
+          fi
 
       - name: Beri izin gradlew
         run: chmod +x android/gradlew
